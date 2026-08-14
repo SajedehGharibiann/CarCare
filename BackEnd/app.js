@@ -7,7 +7,7 @@ import { catchError } from "vanta-api";
 import swaggerUi from "swagger-ui-express";
 import rateLimit from "express-rate-limit";
 import { exportValidationData } from "./Middleware/ExportValidation.js";
-import { authRouter, uploadRouter } from "./Module/index.js";
+
 const app = express();
 const __filename = fileURLToPath(import.meta.url);
 export const __direname = path.dirname(__filename);
@@ -23,7 +23,7 @@ app.use("/upload", express.static(`${__direname}/Public`));
 app.use(exportValidationData);
 app.use(limit);
 app.use("/api/auth",authRouter)
-app.use("/api/upload",uploadRouter)
+
 app.use((req, res, next) => {
   return res.status(404).json({
     success: false,
