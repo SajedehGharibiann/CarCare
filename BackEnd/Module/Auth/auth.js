@@ -1,11 +1,10 @@
-// import { Router } from "express";
-// import { auth, loginOtp, resendCode } from "./authCn.js";
+import { Router } from "express";
+import { register, login } from "./authCn.js";
 
-// const authRouter = Router();
+const authRouter = Router();
 
-// authRouter.route("/").post(auth)
-// authRouter.route("/otp").post(loginOtp)
-// authRouter.route("/resend-code").post(resendCode)
+authRouter.route("/register").post(register)
+authRouter.route("/login").post(login)
 
 
-// export default authRouter
+export default authRouter
