@@ -20,7 +20,7 @@ const limit = rateLimit({
 app.use(express.json());
 app.use(morgan("dev"));
 app.use(cors());
-// app.use("/upload", express.static(`${__direname}/Public`));
+app.use("/upload", express.static(`${__direname}/Public`));
 app.use(exportValidationData);
 app.use(limit);
 app.use("/api/auth",authRouter)
