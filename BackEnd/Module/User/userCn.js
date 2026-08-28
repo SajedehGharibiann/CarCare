@@ -7,7 +7,7 @@ export const getProfile = catchAsync(async (req, res, next) => {
   const user = await User.findById(req.userId).select("-password");
 
   if (!user) {
-    return next(new HandleError("User not found", 404));
+    return next(new HandleERROR("User not found", 404));
   }
 
   return res.status(200).json({

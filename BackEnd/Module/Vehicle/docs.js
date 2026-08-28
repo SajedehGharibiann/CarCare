@@ -37,7 +37,7 @@
 *               color:
 *                 type: string
 *                 example: White
-*               licensePlate:
+*               plateNumber:
 *                 type: string
 *                 example: 12A34567
 *               mileage:
@@ -130,7 +130,7 @@
 *               color:
 *                 type: string
 *                 example: Black
-*               licensePlate:
+*               plateNumber:
 *                 type: string
 *                 example: 12A34567
 *               mileage:
