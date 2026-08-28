@@ -57,7 +57,7 @@ export const login = catchAsync(async (req, res, next) => {
   if (!isPasswordCorrect) {
     return next(new HandleERROR("invalid email or password", 401));
   }
-  const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+  const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
     expiresIn: "10d",
   });
 

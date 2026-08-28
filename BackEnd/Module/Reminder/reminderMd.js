@@ -23,15 +23,6 @@ const reminderSchema = new mongoose.Schema(
     description: {
       type: String,
       trim: true,
-      default: null,
-    },
-    description: {
-      type: String,
-      default: "",
-      trim: true,
-    },
-    receiptImage: {
-      type: String,
       default: "",
     },
   },

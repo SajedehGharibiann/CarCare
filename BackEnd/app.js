@@ -12,6 +12,7 @@ import vehicleRouter from "./Module/Vehicle/vehicle.js";
 import userRouter from "./Module/User/user.js";
 import reminderRouter from "./Module/Reminder/reminder.js";
 import maintenanceRouter from "./Module/Maintenance/maintenance.js";
+import {swaggerSpec} from "./Utils/Swagger.js"
 const app = express();
 const __filename = fileURLToPath(import.meta.url);
 export const __direname = path.dirname(__filename);
@@ -26,6 +27,7 @@ app.use(cors());
 app.use("/upload", express.static(`${__direname}/Public`));
 app.use(exportValidationData);
 app.use(limit);
+app.use("/api-docs",swaggerUi.serve,swaggerUi.setup(swaggerSpec))
 app.use("/api/auth", authRouter);
 app.use("/api/vehicle", vehicleRouter);
 app.use("/api/user", userRouter);

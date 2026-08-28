@@ -1,6 +1,11 @@
 import mongoose, { mongo } from "mongoose";
 const maintenanceSchema = new mongoose.Schema(
   {
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: [true, "userId is required"],
+    },
     vehicleId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Vehicle",

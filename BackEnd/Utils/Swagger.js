@@ -3,13 +3,13 @@ const options = {
   definition: {
     openapi: "3.0.0",
     info: {
-      title: "E-Commerce Project",
+      title: "CarCare Project",
       version: "1.0.0",
-      description: "Api Documentation for E-Commerce Project",
+      description: "CarCare Backend Api Documentation",
     },
     servers: [
       {
-        url: "http://localhost:5000",
+        url: "http://localhost:5001",
       },
     ],
     components: {
@@ -27,6 +27,6 @@ const options = {
       },
     ],
   },
-  apis: ["./Modules/**/docs.js"],
+  apis: ["./Module/**/docs.js"],
 };
 export const swaggerSpec = swaggerJSDoc(options);

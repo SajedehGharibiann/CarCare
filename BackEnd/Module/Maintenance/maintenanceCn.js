@@ -1,11 +1,11 @@
-import ApiFeatures, { catchAsync } from "vanta-api";
+import ApiFeatures, { catchAsync, HandleERROR } from "vanta-api";
 import Maintenance from "./maintenanceMd.js";
 import { __direname } from "../../app.js";
 
 export const create = catchAsync(async (req, res, next) => {
   const maintenance = await Maintenance.create({
     ...req.body,
-    userId: req.user._id,
+    userId: req.userId,
   });
 
   return res.status(201).json({
@@ -20,8 +20,9 @@ export const getAll = catchAsync(async (req, res, next) => {
     .addManualFilters({ userId: req.user._id })
     .sort()
     .filter()
-    .limitFields();
-  paginate().populate();
+    .limitFields()
+    .paginate()
+    .populate();
 
   const result = await features.execute();
 
@@ -30,11 +31,12 @@ export const getAll = catchAsync(async (req, res, next) => {
 
 export const getOne = catchAsync(async (req, res, next) => {
   const features = new ApiFeatures(Maintenance, req.query, req.role)
-    .addManualFilters({ _id: req.params.id, userId: req.user._id })
+    .addManualFilters({ _id: req.params.id, userId: req.userId })
     .sort()
     .filter()
-    .limitFields();
-  paginate().populate();
+    .limitFields()
+    .paginate()
+    .populate();
 
   const result = await features.execute();
 
@@ -45,14 +47,14 @@ export const update = catchAsync(async (req, res, next) => {
   const maintenance = await Maintenance.findOneAndUpdate(
     {
       _id: req.params.id,
-      userId: req.user.id,
+      userId: req.userId,
     },
     req.body,
     { new: true, runValidators: true },
   );
 
   if (!maintenance) {
-    return next(new HandleError("Maintenance not found", 404));
+    return next(new HandleERROR("Maintenance not found", 404));
   }
   return res.status(200).json({
     success: true,
@@ -64,11 +66,11 @@ export const update = catchAsync(async (req, res, next) => {
 export const remove = catchAsync(async (req, res, next) => {
   const maintenance = await Maintenance.findOneAndDelete({
     _id: req.params.id,
-    userId: req.user.id,
+    userId: req.userId,
   });
 
   if (!maintenance) {
-    return next(new HandleError("Maintenance not found", 404));
+    return next(new HandleERROR("Maintenance not found", 404));
   }
 
   if (maintenance.receiptImage) {

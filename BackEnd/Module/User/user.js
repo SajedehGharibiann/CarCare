@@ -7,14 +7,15 @@ import {
   changePassword,
   removeAccount,
 } from "./userCn.js";
+import isLogin from "../../Middleware/isLogin.js";
 
 const userRouter = Router();
 
-userRouter.route("/getProfile").post(getProfile);
-userRouter.route("/updateUser").post(updateUser);
-userRouter.route("/updateProfileImage").post(updateProfileImage);
-userRouter.route("/deleteProfileImage").post(deleteProfileImage);
-userRouter.route("/changePassword").post(changePassword);
-userRouter.route("/removeAccount").post(removeAccount);
+userRouter.route("/").get(isLogin, getProfile);
+userRouter.route("/").put(isLogin, updateUser);
+userRouter.route("/profile/image").put(isLogin, updateProfileImage);
+userRouter.route("/profile/image").delete(isLogin, deleteProfileImage);
+userRouter.route("/password").put(isLogin, changePassword);
+userRouter.route("/account").delete(isLogin, removeAccount);
 
 export default userRouter;

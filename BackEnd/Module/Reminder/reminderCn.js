@@ -4,7 +4,7 @@ import Reminder from "./reminderMd.js";
 export const create = catchAsync(async (req, res, next) => {
   const reminder = await Reminder.create({
     ...req.body,
-    userId: req.user._id,
+    userId: req.userId,
   });
 
   return res.status(201).json({
@@ -16,11 +16,12 @@ export const create = catchAsync(async (req, res, next) => {
 
 export const getAll = catchAsync(async (req, res, next) => {
   const features = new ApiFeatures(Reminder, req.query, req.role)
-    .addManualFilters({ userId: req.user._id })
+    .addManualFilters({ userId: req.userId })
     .sort()
     .filter()
-    .limitFields();
-  paginate().populate();
+    .limitFields()
+    .paginate()
+    .populate();
 
   const result = await features.execute();
 
@@ -29,11 +30,12 @@ export const getAll = catchAsync(async (req, res, next) => {
 
 export const getOne = catchAsync(async (req, res, next) => {
   const features = new ApiFeatures(Reminder, req.query, req.role)
-    .addManualFilters({ _id: req.params.id, userId: req.user._id })
+    .addManualFilters({ _id: req.params.id, userId: req.userId })
     .sort()
     .filter()
-    .limitFields();
-  paginate().populate();
+    .limitFields()
+    .paginate()
+    .populate();
 
   const result = await features.execute();
 
@@ -44,7 +46,7 @@ export const update = catchAsync(async (req, res, next) => {
   const reminder = await Reminder.findOneAndUpdate(
     {
       _id: req.params.id,
-      userId: req.user.id,
+      userId: req.userId,
     },
     req.body,
     { new: true, runValidators: true },
@@ -63,7 +65,7 @@ export const update = catchAsync(async (req, res, next) => {
 export const remove = catchAsync(async (req, res, next) => {
   const reminder = await Reminder.findOneAndDelete({
     _id: req.params.id,
-    userId: req.user.id,
+    userId: req.userId,
   });
 
   if (!reminder) {

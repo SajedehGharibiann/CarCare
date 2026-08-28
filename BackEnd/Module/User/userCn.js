@@ -1,9 +1,10 @@
 import { catchAsync, HandleERROR } from "vanta-api";
 import User from "./userMd.js";
 import { __direname } from "../../app.js";
-
+import fs from "fs";
+import bcrypt from "bcryptjs";
 export const getProfile = catchAsync(async (req, res, next) => {
-  const user = await User.findById(res.user._id).select("-password");
+  const user = await User.findById(req.userId).select("-password");
 
   if (!user) {
     return next(new HandleError("User not found", 404));
@@ -17,7 +18,7 @@ export const getProfile = catchAsync(async (req, res, next) => {
 
 export const updateUser = catchAsync(async (req, res, next) => {
   const user = await User.findByIdAndUpdate(
-    req.user._id,
+    req.userId,
     {
       firstName: req.body.firstName,
       lastName: req.body.lastName,
@@ -38,9 +39,9 @@ export const updateUser = catchAsync(async (req, res, next) => {
 
 export const updateProfileImage = catchAsync(async (req, res, next) => {
   if (!req.file) {
-    return next(new HandleError("Profile image is required", 400));
+    return next(new HandleERROR("Profile image is required", 400));
   }
-  const user = await User.findById(req.user._id);
+  const user = await User.findById(req.userId);
   if (!user) {
     return next(new HandleError("User not found", 404));
   }
@@ -51,7 +52,7 @@ export const updateProfileImage = catchAsync(async (req, res, next) => {
       fs.unlinkSync(oldImagePath);
     }
   }
-  user.profileImage = `User/${req.file.__filename}`;
+  user.profileImage = `User/${req.file.filename}`;
 
   await user.save();
 
@@ -63,14 +64,14 @@ export const updateProfileImage = catchAsync(async (req, res, next) => {
 });
 
 export const deleteProfileImage = catchAsync(async (req, res, next) => {
-  const user = await User.findById(req.user._id);
+  const user = await User.findById(req.userId);
   if (!user) {
-    return next(new HandleError("User not found", 404));
+    return next(new HandleERROR("User not found", 404));
   }
   if (user.profileImage) {
     const imagePath = `${__direname}/Public/${user.profileImage}`;
 
-    if (fs.existSync(imagePath)) {
+    if (fs.existsSync(imagePath)) {
       fs.unlinkSync(imagePath);
     }
     user.profileImage = null;
@@ -86,11 +87,11 @@ export const changePassword = catchAsync(async (req, res, next) => {
   const { currentPassword, newPassword } = req.body;
   if (!currentPassword || !newPassword) {
     return next(
-      new HandleError("currentPassword and newPassword is required", 400),
+      new HandleERROR("currentPassword and newPassword is required", 400),
     );
   }
 
-  const user = await User.findById(req.user._id);
+  const user = await User.findById(req.userId);
   if (!user) {
     return next(new HandleError("User not found", 404));
   }
@@ -100,10 +101,10 @@ export const changePassword = catchAsync(async (req, res, next) => {
     user.password,
   );
   if (!isPasswordCorrect) {
-    return next(new HandleError("Current password is incorrect", 400));
+    return next(new HandleERROR("Current password is incorrect", 400));
   }
 
-  user.password = bcrypt.hash(newPassword, 10);
+  user.password =await bcrypt.hash(newPassword, 10);
 
   await user.save();
 
@@ -114,10 +115,10 @@ export const changePassword = catchAsync(async (req, res, next) => {
 });
 
 export const removeAccount = catchAsync(async (req, res, next) => {
-  const user = await User.findByIdAndDelete(req.user._id);
+  const user = await User.findByIdAndDelete(req.userId);
 
   if (!user) {
-    return next(new HandleError("User not found", 404));
+    return next(new HandleERROR("User not found", 404));
   }
 
   return res.status(200).json({
