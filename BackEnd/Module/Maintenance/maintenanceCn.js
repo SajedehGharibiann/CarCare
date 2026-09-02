@@ -1,7 +1,7 @@
 import ApiFeatures, { catchAsync, HandleERROR } from "vanta-api";
 import Maintenance from "./maintenanceMd.js";
 import { __direname } from "../../app.js";
-
+import fs from "fs";
 export const create = catchAsync(async (req, res, next) => {
   const maintenance = await Maintenance.create({
     ...req.body,
@@ -17,7 +17,7 @@ export const create = catchAsync(async (req, res, next) => {
 
 export const getAll = catchAsync(async (req, res, next) => {
   const features = new ApiFeatures(Maintenance, req.query, req.role)
-    .addManualFilters({ userId: req.user._id })
+    .addManualFilters({ userId: req.userId })
     .sort()
     .filter()
     .limitFields()

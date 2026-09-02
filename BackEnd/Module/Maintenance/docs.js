@@ -1,173 +1,182 @@
 /**
- * @swagger
- * tags:
- *   name: Maintenance
- *   description: Vehicle maintenance APIs
- */
+* @swagger
+* tags:
+*   name: Maintenance
+*   description: Vehicle maintenance management
+*/
 
 /**
- * @swagger
- * /api/maintenance:
- *   post:
- *     tags:
- *       - Maintenance
- *     summary: Create a maintenance record
- *     security:
- *       - bearerAuth: []
- *     requestBody:
- *       required: true
- *       content:
- *         multipart/form-data:
- *           schema:
- *             type: object
- *             required:
- *               - vehicleId
- *               - title
- *               - type
- *               - date
- *             properties:
- *               vehicleId:
- *                 type: string
- *                 example: 66c123456789abcdef123456
- *               title:
- *                 type: string
- *                 example: Oil Change
- *               type:
- *                 type: string
- *                 example: Oil
- *               date:
- *                 type: string
- *                 format: date
- *                 example: 2026-08-28
- *               mileage:
- *                 type: number
- *                 example: 120000
- *               cost:
- *                 type: number
- *                 example: 1500000
- *               description:
- *                 type: string
- *                 example: Engine oil and filter changed
- *               receiptImage:
- *                 type: string
- *                 format: binary
- *     responses:
- *       201:
- *         description: Maintenance created successfully
- *       400:
- *         description: Invalid maintenance data
- *       401:
- *         description: Unauthorized
- */
-/**
- * @swagger
- * /api/maintenance:
- *   get:
- *     tags:
- *       - Maintenance
- *     summary: Get all maintenance records
- *     security:
- *       - bearerAuth: []
- *     responses:
- *       200:
- *         description: Maintenance records retrieved successfully
- *       401:
- *         description: Unauthorized
- */
+* @swagger
+* /api/maintenance/:
+*   post:
+*     summary: Create a maintenance record
+*     tags: [Maintenance]
+*     security:
+*       - bearerAuth: []
+*     requestBody:
+*       required: true
+*       content:
+*         multipart/form-data:
+*           schema:
+*             type: object
+*             required:
+*               - vehicleId
+*               - title
+*               - date
+*               - mileage
+*               - cost
+*             properties:
+*               vehicleId:
+*                 type: string
+*                 example: 68b6a123456789abcdef1234
+*               title:
+*                 type: string
+*                 example: Engine oil change
+*               type:
+*                 type: string
+*                 enum:
+*                   - Maintenance
+*                   - Repair
+*                   - Oil Change
+*                   - Tire
+*                   - Battery
+*                   - Other
+*                 example: Oil Change
+*               date:
+*                 type: string
+*                 format: date
+*                 example: 2026-09-02
+*               mileage:
+*                 type: number
+*                 example: 120000
+*               cost:
+*                 type: number
+*                 example: 2500000
+*               description:
+*                 type: string
+*                 example: Changed engine oil and oil filter
+*               receiptImage:
+*                 type: string
+*                 format: binary
+*     responses:
+*       201:
+*         description: Maintenance created successfully
+*       400:
+*         description: Validation error
+*/
 
 /**
- * @swagger
- * /api/maintenance/{id}:
- *   get:
- *     tags:
- *       - Maintenance
- *     summary: Get one maintenance record
- *     security:
- *       - bearerAuth: []
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: string
- *     responses:
- *       200:
- *         description: Maintenance record retrieved successfully
- *       404:
- *         description: Maintenance record not found
- *       401:
- *         description: Unauthorized
- */
+* @swagger
+* /api/maintenance/:
+*   get:
+*     summary: Get all maintenance records
+*     tags: [Maintenance]
+*     security:
+*       - bearerAuth: []
+*     responses:
+*       200:
+*         description: Maintenance records retrieved successfully
+*/
 /**
- * @swagger
- * /api/maintenance/{id}:
- *   put:
- *     tags:
- *       - Maintenance
- *     summary: Update maintenance record
- *     security:
- *       - bearerAuth: []
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: string
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               title:
- *                 type: string
- *                 example: Oil Change
- *               type:
- *                 type: string
- *                 example: Oil
- *               date:
- *                 type: string
- *                 format: date
- *                 example: 2026-09-01
- *               mileage:
- *                 type: number
- *                 example: 125000
- *               cost:
- *                 type: number
- *                 example: 1600000
- *               description:
- *                 type: string
- *                 example: Oil and filter replaced
- *     responses:
- *       200:
- *         description: Maintenance updated successfully
- *       404:
- *         description: Maintenance record not found
- *       401:
- *         description: Unauthorized
- */
+* @swagger
+* /api/maintenance/{id}:
+*   get:
+*     summary: Get one maintenance record
+*     tags: [Maintenance]
+*     security:
+*       - bearerAuth: []
+*     parameters:
+*       - in: path
+*         name: id
+*         required: true
+*         schema:
+*           type: string
+*         example: 68b6a123456789abcdef1234
+*     responses:
+*       200:
+*         description: Maintenance retrieved successfully
+*       404:
+*         description: Maintenance not found
+*/
 
 /**
- * @swagger
- * /api/maintenance/{id}:
- *   delete:
- *     tags:
- *       - Maintenance
- *     summary: Delete maintenance record
- *     security:
- *       - bearerAuth: []
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: string
- *     responses:
- *       200:
- *         description: Maintenance deleted successfully
- *       404:
- *         description: Maintenance record not found
- *       401:
- *         description: Unauthorized
- */
+* @swagger
+* /api/maintenance/{id}:
+*   put:
+*     summary: Update maintenance record
+*     tags: [Maintenance]
+*     security:
+*       - bearerAuth: []
+*     parameters:
+*       - in: path
+*         name: id
+*         required: true
+*         schema:
+*           type: string
+*         example: 68b6a123456789abcdef1234
+*     requestBody:
+*       required: true
+*       content:
+*         multipart/form-data:
+*           schema:
+*             type: object
+*             properties:
+*               vehicleId:
+*                 type: string
+*                 example: 68b6a123456789abcdef1234
+*               title:
+*                 type: string
+*                 example: Engine oil change
+*               type:
+*                 type: string
+*                 enum:
+*                   - Maintenance
+*                   - Repair
+*                   - Oil Change
+*                   - Tire
+*                   - Battery
+*                   - Other
+*               date:
+*                 type: string
+*                 format: date
+*                 example: 2026-09-02
+*               mileage:
+*                 type: number
+*                 example: 125000
+*               cost:
+*                 type: number
+*                 example: 3000000
+*               description:
+*                 type: string
+*                 example: Updated maintenance information
+*               receiptImage:
+*                 type: string
+*                 format: binary
+*     responses:
+*       200:
+*         description: Maintenance updated successfully
+*       404:
+*         description: Maintenance not found
+*/
+
+/**
+* @swagger
+* /api/maintenance/{id}:
+*   delete:
+*     summary: Delete maintenance record
+*     tags: [Maintenance]
+*     security:
+*       - bearerAuth: []
+*     parameters:
+*       - in: path
+*         name: id
+*         required: true
+*         schema:
+*           type: string
+*         example: 68b6a123456789abcdef1234
+*     responses:
+*       200:
+*         description: Maintenance deleted successfully
+*       404:
+*         description: Maintenance not found
+*/
