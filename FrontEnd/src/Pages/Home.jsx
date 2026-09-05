@@ -13,29 +13,39 @@ export default function Home() {
   return (
     <>
       <Navbar />
-      <main className="w-full min-h-[500px] overflow-hidden bg-blue-200 relative mb-[100px]">
-        <div className="absolute -right-20 -top-20 w-[400px] h-[400px] bg-blue-300 rounded-full opacity-70"></div>
+      <main className="w-full min-h-[500px] overflow-hidden mb-[100px]">
+        <div className="relative h-[500px]">
+          <img
+            src="/1788618420391.jpg"
+            alt=""
+            className="w-full h-full object-cover"
+          />
 
-        <div className="relative max-w-7xl mx-auto px-8 flex items-center min-h-[500px]">
-          
-          <div className="max-w-xl ">
-            <h2 className="text-5xl font-bold text-blue-950 mb-4">
-              Take Care Of Your Car <br /> We'll Take Of The Rest.
-            </h2>
-            <p className="opacity-75 mb-6 text-blue-950 font-light">
-              Keep track of your car maintenance, repairs and upcoming services
-              in one simple place.
-            </p>
-            <div className="flex gap-4">
-              <button className="bg-blue-950 rounded-[5px] text-white py-1 px-3 cursor-pointer">
-                Get Started
-              </button>
-              <button className="bg-blue-950 rounded-[5px] text-white py-1 px-3 cursor-pointer">
-                Explore Features
-              </button>
+          <div className="absolute inset-0 bg-black/50"></div>
+
+          <div className="absolute inset-0 z-10 max-w-7xl mx-auto px-8 flex items-center">
+            <div className="max-w-xl">
+              <h2 className="text-5xl font-bold text-white mb-4">
+                Take Care Of Your Car <br />
+                We'll Take Care Of The Rest.
+              </h2>
+
+              <p className="text-white mb-6 font-light">
+                Keep track of your car maintenance, repairs and upcoming
+                services in one simple place.
+              </p>
+
+              <div className="flex gap-4">
+                <button className="bg-blue-950 rounded-[5px] text-white py-2 px-4 cursor-pointer">
+                  Get Started
+                </button>
+
+                <button className="bg-blue-950 rounded-[5px] text-white py-2 px-4 cursor-pointer">
+                  Explore Features
+                </button>
+              </div>
             </div>
           </div>
-          <img src="/HeroCar.png" alt="" className=" w-[50%] h-[50%] object-cover ml-18" />
         </div>
       </main>
       <OurServices />
