@@ -1,5 +1,6 @@
 import React from "react";
 import Navbar from "../Components/Navbar";
+import { StickyNote } from "lucide-react";
 
 export default function Home() {
   return (
