@@ -13,7 +13,7 @@ export default function Navbar() {
             <li>
               <a
                 href="#"
-                className="relative py-1 after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-blue-950 after:transition-all after:duration-300 hover:after:w-full"
+                className="relative py-1 after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-blue-900 after:transition-all after:duration-300 hover:after:w-full"
               >
                 Home
               </a>
@@ -21,7 +21,7 @@ export default function Navbar() {
             <li>
               <a
                 href="#"
-                className="relative py-1 after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-blue-950 after:transition-all after:duration-300 hover:after:w-full"
+                className="relative py-1 after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-blue-900 after:transition-all after:duration-300 hover:after:w-full"
               >
                 Car Services
               </a>
@@ -29,7 +29,7 @@ export default function Navbar() {
             <li>
               <a
                 href="#"
-                className="relative py-1 after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-blue-950 after:transition-all after:duration-300 hover:after:w-full"
+                className="relative py-1 after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-blue-900 after:transition-all after:duration-300 hover:after:w-full"
               >
                 Contact Us
               </a>
@@ -37,7 +37,7 @@ export default function Navbar() {
             <li>
               <a
                 href="#"
-                className="relative py-1 after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-blue-950 after:transition-all after:duration-300 hover:after:w-full"
+                className="relative py-1 after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-blue-900 after:transition-all after:duration-300 hover:after:w-full"
               >
                 About Us
               </a>
