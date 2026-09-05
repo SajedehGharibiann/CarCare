@@ -26,13 +26,13 @@ export default function Home() {
         </div>
       </main>
 
-      <div className="flex items-center gap-6">
+      <div className="grid md:grid-cols-2 gap-16 items-center">
        <img
-            src="../../../Public/ServiceMan.jpg"
+            src="/ServiceMan.jpg"
             alt=""
             className="w-[400px] rounded-xl"
           />
-        <div className="flex-col justify-center gap-6">
+        <div className="flex flex-col justify-center gap-6">
           
            <h2 className="text-3xl font-bold mb-5">Our Services</h2>
           <p className="w-[40%] font-light">
