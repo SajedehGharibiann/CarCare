@@ -15,15 +15,33 @@ export default function Home() {
             one simple place.
           </p>
           <div className="flex gap-4">
-          <button className="bg-blue-950 rounded-[5px] text-white py-1 px-3 cursor-pointer">Get Started</button>
-          <button className="bg-blue-950 rounded-[5px] text-white py-1 px-3 cursor-pointer">Explore Features</button>
-        </div>
+            <button className="bg-blue-950 rounded-[5px] text-white py-1 px-3 cursor-pointer">
+              Get Started
+            </button>
+            <button className="bg-blue-950 rounded-[5px] text-white py-1 px-3 cursor-pointer">
+              Explore Features
+            </button>
+          </div>
         </div>
       </main>
 
-      <div>
-        <h2 className="text-xl">Our Services</h2>
-
+      <div className="flex items-center gap-6">
+       <img
+            src="../../../Public/ServiceMan.jpg"
+            alt=""
+            className="w-[400px] rounded-xl"
+          />
+        <div className="flex-col justify-center gap-6">
+          
+           <h2 className="text-3xl font-bold mb-5">Our Services</h2>
+          <p className="w-[40%] font-light">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto
+            possimus consectetur nihil fugit magni ab, reprehenderit odio alias
+            quasi, nesciunt atque explicabo vitae! Amet rem vel aperiam quaerat
+            beatae voluptatibus?
+          </p>
+          <StickyNote/>
+        </div>
       </div>
     </>
   );
