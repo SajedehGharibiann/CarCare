@@ -4,7 +4,7 @@ import React from 'react'
 export default function OurServices() {
   return (
     <>
-        <section className="max-w-7xl mx-auto px-8 py-24">
+        <section className="max-w-7xl mx-auto px-8 py-24 mb-[100px]">
         <div className="grid md:grid-cols-2 gap-16 items-center">
           <div className="relative">
             <img
