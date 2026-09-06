@@ -2,10 +2,36 @@ import { ArrowBigDown, ArrowDown, Plus } from "lucide-react";
 import React, { useState } from "react";
 
 export default function CommonQuestions() {
-    const [isOpen,setIsOpen]=useState(false)
-    const handleClick=()=>{
-        setIsOpen(!isOpen)
-    }
+  const [isOpenIndex, setIsOpenIndex] = useState(false);
+  const handleClick = (index) => {
+    setIsOpenIndex(isOpenIndex === index ? null : index);
+  };
+
+  const questions = [
+    {
+      question: "How can I add my car to CarCare?",
+      answer:
+        "You can easily add your vehicle by entering its basic information.",
+    },
+    {
+      question: "How can I track my car maintenance?",
+      answer: "CarCare helps you keep track of all your maintenance records.",
+    },
+    {
+      question: "Can I add multiple vehicles?",
+      answer: "Yes, you can add and manage multiple vehicles in your account.",
+    },
+    {
+      question: "Can I set maintenance reminders?",
+      answer:
+        "Yes, you can create reminders for your upcoming car maintenance.",
+    },
+    {
+      question: "Is my car information safe?",
+      answer:
+        "Yes, your vehicle information is securely stored in your account.",
+    },
+  ];
   return (
     <section className="max-w-7xl mx-auto px-8 py-24 mb-[100px] bg-slate-50">
       <div className="flex flex-col justify-center items-center mx-auto">
@@ -16,51 +42,26 @@ export default function CommonQuestions() {
           Everything you need to know about CarCare.
         </p>
         <div className="flex flex-col justify-center max-w-3xl space-y-4">
-         <div className="w-[450px] bg-gray-100 rounded-xl shadow-sm cursor-pointer">
-  <button
-    onClick={handleClick}
-    className="flex w-full items-center justify-between px-6 py-5 text-left font-semibold text-blue-950"
-  >
-    How can I add my car to CarCare?
-    <ArrowDown size={16} />
-  </button>
-
-  {isOpen && (
-    <p className="px-6 pb-5 text-sm text-slate-500">
-      You can easily add your vehicle by entering its basic information.
-    </p>
-  )}
-</div>
-    <div className="w-[450px] h-[64px] bg-gray-100 rounded-xl shadow-sm cursor-pointer">
-            <button onClick={handleClick} className="flex w-full items-center justify-between px-6 py-5 text-left font-semibold text-blue-950 cursor-pointer">
-              How can I add my car to CarCare?
-              <ArrowDown size={16} className="text-blue-950"/>
-            </button>
-            {isOpen && (
-                <p>You can easily add your vehicle by entering its basic information</p>
-            )}
-          </div>
-           <div className="w-[450px] h-[64px] bg-gray-100 rounded-xl shadow-sm cursor-pointer">
-            <button className="flex w-full items-center justify-between px-6 py-5 text-left font-semibold text-blue-950 cursor-pointer">
-              How can I add my car to CarCare?
-              <ArrowDown size={16} className="text-blue-950"/>
-            </button>
-            
-          </div>
-           <div className="w-[450px] h-[64px] bg-gray-100 rounded-xl shadow-sm cursor-pointer">
-            <button className="flex w-full items-center justify-between px-6 py-5 text-left font-semibold text-blue-950 cursor-pointer">
-              How can I add my car to CarCare?
-              <ArrowDown size={16} className="text-blue-950"/>
-            </button>
-            
-          </div>
-           <div className="w-[450px] h-[64px] bg-gray-100 rounded-xl shadow-sm cursor-pointer">
-            <button className="flex w-full items-center justify-between px-6 py-5 text-left font-semibold text-blue-950 cursor-pointer">
-              How can I add my car to CarCare?
-              <ArrowDown size={16} className="text-blue-950"/>
-            </button>
-            
-          </div>
+          {questions.map((item, index) => (
+            <div
+              key={index}
+              className="w-[450px] bg-gray-100 rounded-xl shadow-sm"
+            >
+              <button
+                onClick={() => handleClick(index)}
+                className="flex w-full items-center justify-between px-6 py-5 text-left font-semibold text-blue-950  cursor-pointer"
+              >
+                {item.question}
+                <ArrowDown
+                  size={16}
+                  className={`transition-transform duration-700 ${isOpenIndex === index ? "rotate-180" : ""} text-blue-700`}
+                />
+              </button>
+              {isOpenIndex===index &&( 
+                <p className="bg-blue-100 px-6 py-4 text-sm text-blue-700 rounded-b-xl faqOpen">{item.answer}</p>
+              )}
+            </div>
+          ))}
         </div>
       </div>
     </section>
