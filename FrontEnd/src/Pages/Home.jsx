@@ -8,12 +8,14 @@ import {
   Wrench,
 } from "lucide-react";
 import OurServices from "../Components/OurServices";
+import ScrollReveal from "../Components/ScrollReveal";
+import CommonQuestions from "../Components/CommonQuestions";
 
 export default function Home() {
   return (
     <>
       <Navbar />
-      <main className="w-full min-h-[500px] overflow-hidden mb-[100px]">
+      <main className="w-full min-h-[500px] overflow-hidden mb-[100px] animate-fade-down">
         <div className="relative h-[500px]">
           <img
             src="/1788618420391.jpg"
@@ -48,7 +50,12 @@ export default function Home() {
           </div>
         </div>
       </main>
-      <OurServices />
+      <ScrollReveal>
+        <OurServices />
+      </ScrollReveal>
+      <ScrollReveal>
+        <CommonQuestions/>
+      </ScrollReveal>
     </>
   );
 }
