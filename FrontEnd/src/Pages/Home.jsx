@@ -10,6 +10,7 @@ import {
 import OurServices from "../Components/OurServices";
 import ScrollReveal from "../Components/ScrollReveal";
 import CommonQuestions from "../Components/CommonQuestions";
+import Footer from "../Components/Footer";
 
 export default function Home() {
   return (
@@ -56,6 +57,7 @@ export default function Home() {
       <ScrollReveal>
         <CommonQuestions/>
       </ScrollReveal>
+      <Footer/>
     </>
   );
 }
