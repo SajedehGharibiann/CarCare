@@ -18,7 +18,7 @@ const __filename = fileURLToPath(import.meta.url);
 export const __direname = path.dirname(__filename);
 const limit = rateLimit({
   windowMs: 5 * 60 * 1000,
-  max: 20,
+  max: 200,
   message: "ip blocked",
 });
 app.use(express.json());
