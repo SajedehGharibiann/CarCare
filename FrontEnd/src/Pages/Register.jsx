@@ -147,6 +147,10 @@ export default function Register() {
             >
               Register
             </button>
+            <div className="flex ">
+              <span className="text-gray-800 font-medium">Do you already have an account?</span>
+              <button type="button" className="outline-none border-none font-medium text-blue-950 ">Sign in</button>
+            </div>
           </div>
         </form>
       </div>
