@@ -34,7 +34,7 @@ export default function Register() {
         showToast(data.message || "Registration failed!", "error");
       }
     } catch (error) {
-      showToast("Something went wrong","error")
+      showToast("Something went wrong", "error");
     }
   };
 
@@ -46,7 +46,7 @@ export default function Register() {
         className="w-full h-full object-cover"
       />
 
-      <div className=" absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[400px] rounded-[10px] flex flex-col justify-center items-center gap-10 bg-white/20 backdrop-blur-xl border border-white/30 shadow-2xl">
+      <div className=" absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-[10px] flex flex-col justify-center items-center gap-10 bg-white/20 backdrop-blur-xl border border-white/30 shadow-2xl">
         <h3 className="text-2xl font-semibold mt-4">Register</h3>
 
         <form onSubmit={handleRegister}>
@@ -65,7 +65,7 @@ export default function Register() {
                 onChange={handleChange}
                 value={formData.firstName}
                 required
-                className="w-[150px] p-1 rounded-lg bg-white/50 border border-white/60 outline-none"
+                className="w-[150px] p-1 rounded-lg bg-white/50 border border-white/60 outline-none placeholder:text-[12px]"
               />
             </div>
 
@@ -83,7 +83,7 @@ export default function Register() {
                 onChange={handleChange}
                 value={formData.lastName}
                 required
-                className="w-[150px] p-1 rounded-lg bg-white/50 border border-white/60 outline-none"
+                className="w-[150px] p-1 rounded-lg bg-white/50 border border-white/60 outline-none placeholder:text-[14px]"
               />
             </div>
 
@@ -101,7 +101,7 @@ export default function Register() {
                 onChange={handleChange}
                 value={formData.email}
                 required
-                className="w-[150px] p-1 rounded-lg bg-white/50 border border-white/60 outline-none"
+                className="w-[150px] p-1 rounded-lg bg-white/50 border border-white/60 outline-none placeholder:text-[12px]"
               />
             </div>
 
@@ -110,16 +110,16 @@ export default function Register() {
                 htmlFor="phoneNumber"
                 className="font-medium text-sm text-gray-900 w-[120px]"
               >
-                PhoneNumber
+                Phone Number
               </label>
               <input
                 type="tel"
                 name="phoneNumber"
-                placeholder="Enter your phoneNumber"
+                placeholder="Enter your phone Number"
                 onChange={handleChange}
                 value={formData.phoneNumber}
                 required
-                className="w-[150px] p-1 rounded-lg bg-white/50 border border-white/60 outline-none"
+                className="w-[150px] p-1 rounded-lg bg-white/50 border border-white/60 outline-none placeholder:text-[12px]"
               />
             </div>
 
@@ -137,7 +137,7 @@ export default function Register() {
                 onChange={handleChange}
                 value={formData.password}
                 required
-                className="w-[150px] p-1 rounded-lg bg-white/50 border border-white/60 outline-none"
+                className="w-[150px] p-1 rounded-lg bg-white/50 border border-white/60 outline-none placeholder:text-[12px]"
               />
             </div>
 
@@ -147,9 +147,17 @@ export default function Register() {
             >
               Register
             </button>
-            <div className="flex ">
-              <span className="text-gray-800 font-medium">Do you already have an account?</span>
-              <button type="button" className="outline-none border-none font-medium text-blue-950 ">Sign in</button>
+            <div className="flex gap-6">
+              <span className="text-gray-950 font-medium">
+                Do you already have an account?
+              </span>
+              <button
+                type="button"
+                className="outline-none border-none font-medium text-indigo-950 cursor-pointer"
+                onClick={()=>navigate("/signin")}
+              >
+                Sign in
+              </button>
             </div>
           </div>
         </form>
