@@ -13,7 +13,7 @@ import CommonQuestions from "../Components/CommonQuestions";
 import Footer from "../Components/Footer";
 
 export default function Home() {
-  const dispatch=useDispa
+  
   return (
     <>
       <Navbar />
