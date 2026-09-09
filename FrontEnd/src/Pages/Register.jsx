@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { showToast } from "../../Utils/toast";
 
 export default function Register() {
   const [formData, setFormData] = useState({
@@ -16,17 +17,24 @@ export default function Register() {
 
   const handleRegister = async (e) => {
     e.preventDefault();
-    const res = await fetch("http://localhost:5001/api/auth/register", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    });
-    const data = await res.json();
-    console.log(data);
-    if (res.ok) {
-      navigate("/signin");
+    try {
+      const res = await fetch("http://localhost:5001/api/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+      const data = await res.json();
+      console.log(data);
+      if (res.ok) {
+        showToast("Registration successful!", "success");
+        navigate("/signin");
+      } else {
+        showToast(data.message || "Registration failed!", "error");
+      }
+    } catch (error) {
+      showToast("Something went wrong","error")
     }
   };
 
