@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 export default function Navbar() {
   const navigate=useNavigate()
   return (
-    <div className="flex justify-between items-center m-6">
+    <div className="flex justify-between items-center m-6 bg-transparent">
       <h1 className="text-xl font-bold">
         <span className="text-blue-950">Car</span>Care
       </h1>
