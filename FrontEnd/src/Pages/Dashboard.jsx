@@ -1,4 +1,4 @@
-import { Bell, Search, User2Icon } from "lucide-react";
+import { Bell, DotIcon, DotSquareIcon, MoreHorizontalIcon, MoreVertical, Search, User2Icon } from "lucide-react";
 import React from "react";
 import { useSelector } from "react-redux";
 
@@ -10,37 +10,43 @@ export default function Dashboard() {
         className="flex items-center justify-between px-5 py-2
        bg-slate-50 shadow-sm"
       >
-       <div className="relative">
-        <Search size={20} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500"/>
-         <input
-          type="search"
-          placeholder="Search..."
-          className="outline-none bg-slate-200 py-2 pl-10 pr-3 w-[550px] rounded-lg text-sm transition focus:ring-1 focus:ring-blue-900"
-        />
-       </div>
-       
+        <div className="relative">
+          <Search
+            size={20}
+            className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500"
+          />
+          <input
+            type="search"
+            placeholder="Search..."
+            className="outline-none bg-slate-200 py-2 pl-10 pr-3 w-[550px] rounded-lg text-sm transition focus:ring-1 focus:ring-blue-900"
+          />
+        </div>
+
         <div className="flex justify-between gap-5 items-center">
           <div className="flex gap-2 justify-center align-middle items-center">
-          {user?.profileImage ? (
-            <img
-              src={user.profileImage}
-              alt="Profile"
-              className="w-10 h-10 rounded-full object-cover"
-            />
-          ) : (
-            <User2Icon
-              size={40}
-              className="border-2 border-blue-950 rounded-full p-1"
-            />
-          )}
-          <div className="flex flex-col ">
-            <h4 className="font-semibold">{user?.firstName}</h4>
-            <span className="font-light text-[14px] text-gray-700">
-              Profile
-            </span>
+            {user?.profileImage ? (
+              <img
+                src={user.profileImage}
+                alt="Profile"
+                className="w-10 h-10 rounded-full object-cover"
+              />
+            ) : (
+              <div className="w-10 h-10 bg-slate-100 rounded-full flex justify-center items-center">
+                <User2Icon
+                  size={32}
+                  className="text-blue-950"
+                />
+              </div>
+            )}
+            <div className="flex flex-col ">
+              <h4 className="font-semibold">{user?.firstName}</h4>
+              <span className="font-light text-[14px] text-gray-700">
+                Profile
+              </span>
+            </div>
+            <MoreVertical  size={16} className="text-blue-950 cursor-pointer"/>
           </div>
-        </div>
-        <Bell size={24} className="text-blue-900"/>
+          <Bell size={24} className="text-blue-900" />
         </div>
       </div>
       <div className="m-5">
