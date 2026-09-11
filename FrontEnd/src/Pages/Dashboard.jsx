@@ -1,12 +1,54 @@
-import React from 'react'
-import { useSelector } from 'react-redux'
+import { Bell, Search, User2Icon } from "lucide-react";
+import React from "react";
+import { useSelector } from "react-redux";
 
 export default function Dashboard() {
-  const user=useSelector((state)=>state.auth.user)
+  const user = useSelector((state) => state.auth.user);
   return (
     <div>
-      <h1>Hello ,{user?.firstName}</h1>
-      Dashboard
+      <div
+        className="flex items-center justify-between px-5 py-2
+       bg-slate-50 shadow-sm"
+      >
+       <div className="relative">
+        <Search size={20} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500"/>
+         <input
+          type="search"
+          placeholder="Search..."
+          className="outline-none bg-slate-200 py-2 pl-10 pr-3 w-[550px] rounded-lg text-sm transition focus:ring-1 focus:ring-blue-900"
+        />
+       </div>
+       
+        <div className="flex justify-between gap-5 items-center">
+          <div className="flex gap-2 justify-center align-middle items-center">
+          {user?.profileImage ? (
+            <img
+              src={user.profileImage}
+              alt="Profile"
+              className="w-10 h-10 rounded-full object-cover"
+            />
+          ) : (
+            <User2Icon
+              size={40}
+              className="border-2 border-blue-950 rounded-full p-1"
+            />
+          )}
+          <div className="flex flex-col ">
+            <h4 className="font-semibold">{user?.firstName}</h4>
+            <span className="font-light text-[14px] text-gray-700">
+              Profile
+            </span>
+          </div>
+        </div>
+        <Bell size={24} className="text-blue-900"/>
+        </div>
+      </div>
+      <div className="m-5">
+        <h1 className="font-bold text-2xl">Hello 👋 ,{user?.firstName}</h1>
+        <p className="font-semibold text-gray-900 text-[14px]">
+          Let’s keep your car in great shape.
+        </p>
+      </div>
     </div>
-  )
+  );
 }
