@@ -1,7 +1,8 @@
-import { Bell, Car, LayoutDashboard, User, Wrench } from "lucide-react";
+import { Bell, Car, LayoutDashboard, LogOut, User, Wrench } from "lucide-react";
 import React from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import { logout } from "../../../Slices/authSlice";
 
 export default function Sidebar() {
   const dispatch = useDispatch();
@@ -11,10 +12,10 @@ export default function Sidebar() {
     navigate("/");
   };
   return (
-    <aside className="fixed left-0 top-0 h-screen w-64 bg-blue-950 text-white flex flex-col">
+    <aside className="fixed left-0 top-0 h-screen w-60 bg-blue-950 text-white flex flex-col">
       <div className="p-6">
         <h1 className="text-2xl font-bold">
-          <span className="text-blue-400">CarCare</span>
+          <span className="text-white">CarCare</span>
         </h1>
       </div>
       <nav className="flex flex-col px-4 gap-2">
@@ -56,6 +57,7 @@ export default function Sidebar() {
           Profile
         </Link>
         <button onClick={handleLogOut} className="flex w-full items-center gap-3 rounded-lg px-4 py-3 hover:bg-blue-900">
+          <LogOut size={20}/>
           Logout
         </button>
       </div>
