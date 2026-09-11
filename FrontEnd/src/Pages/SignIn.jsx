@@ -31,9 +31,10 @@ export default function SignIn() {
         showToast("Sign in successfully", "success");
         dispatch(
           login({
-            user: data.data.user,
+            user: data.user,
             token: data.data.token,
           }),
+          
         );
         navigate("/dashboard");
       } else {
