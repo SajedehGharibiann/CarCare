@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { showToast } from "../../Utils/toast";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { login } from "../../Slices/authSlice";
 
 export default function SignIn() {
   const [formData, setFromData] = useState({
