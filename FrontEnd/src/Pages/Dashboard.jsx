@@ -1,6 +1,8 @@
 import { Bell, DotIcon, DotSquareIcon, MoreHorizontalIcon, MoreVertical, Search, User2Icon } from "lucide-react";
 import React from "react";
 import { useSelector } from "react-redux";
+import DashboardCards from "../Components/DashboardCards";
+import DashboardVehicles from "../Components/DashboardVehicles";
 
 export default function Dashboard() {
   const user = useSelector((state) => state.auth.user);
@@ -8,7 +10,7 @@ export default function Dashboard() {
     <div>
       <div
         className="flex items-center justify-between px-5 py-2
-       bg-slate-50 shadow-sm"
+       bg-slate-50 shadow-sm shadow-slate-400/30"
       >
         <div className="relative">
           <Search
@@ -55,6 +57,8 @@ export default function Dashboard() {
           Let’s keep your car in great shape.
         </p>
       </div>
+      <DashboardCards/>
+      <DashboardVehicles/>
     </div>
   );
 }
