@@ -15,9 +15,9 @@ export default function PrivateLayout({ children }) {
     );
   }
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen bg-slate-200">
       <Sidebar />
-      <main className="ml-64 min-h-screen">{children}</main>
+      <main className="ml-60 min-h-screen ">{children}</main>
     </div>
   );
 }
