@@ -1,14 +1,14 @@
-import { Sidebar } from "lucide-react";
 import React from "react";
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
+import Sidebar from "../Sidebar";
 
 export default function PrivateLayout({ children }) {
-  const isLogin = useSelector((state) => state.auth.isLogin);
-  if (!isLogin) {
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+  if (!isLoggedIn) {
     return (
       <Navigate
-        to="/
+        to="/signin
     "
         replace
       />
