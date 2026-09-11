@@ -16,33 +16,33 @@ export default function AppRoutes() {
       <Route
         path="/"
         element={
-          <PrivateLayout>
+          
             <Home />
-          </PrivateLayout>
+         
         }
       />
       <Route
         path="/signin"
         element={
-          <PrivateLayout>
+         
             <SignIn />
-          </PrivateLayout>
+       
         }
       />
       <Route
         path="/register"
         element={
-          <PrivateLayout>
+       
             <Register />
-          </PrivateLayout>
+       
         }
       />
       <Route
         path="/services"
         element={
-          <PrivateLayout>
+      
             <Services />
-          </PrivateLayout>
+      
         }
       />
       <Route
