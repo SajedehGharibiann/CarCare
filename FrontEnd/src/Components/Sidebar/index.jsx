@@ -15,7 +15,7 @@ export default function Sidebar() {
     <aside className="fixed left-0 top-0 h-screen w-60 bg-blue-950 text-white flex flex-col">
       <div className="p-6">
         <h1 className="text-2xl font-bold">
-          <span className="text-white">CarCare</span>
+          <span className="text-white cursor-pointer" onClick={()=>navigate("/")}>CarCare</span>
         </h1>
       </div>
       <nav className="flex flex-col px-4 gap-2">
@@ -56,12 +56,12 @@ export default function Sidebar() {
           <User />
           Profile
         </Link>
-        <button onClick={handleLogOut} className="flex w-full items-center gap-3 rounded-lg px-4 py-3 hover:bg-blue-900">
+        <button onClick={handleLogOut} className="flex w-full items-center gap-3 rounded-lg px-4 py-3 hover:bg-blue-900 cursor-pointer">
           <LogOut size={20}/>
           Logout
         </button>
       </div>
-      Sidebar
+      
     </aside>
   );
 }
