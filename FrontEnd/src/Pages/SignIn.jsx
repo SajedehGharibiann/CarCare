@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { showToast } from "../../Utils/toast";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 export default function SignIn() {
   const [formData, setFromData] = useState({
@@ -8,6 +9,7 @@ export default function SignIn() {
     password: "",
   });
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const handleChange = (e) => {
     setFromData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -26,7 +28,13 @@ export default function SignIn() {
       console.log(data);
       if (res.ok) {
         showToast("Sign in successfully", "success");
-        navigate("/");
+        dispatch(
+          login({
+            user: data.data.user,
+            token: data.data.token,
+          }),
+        );
+        navigate("/dashboard");
       } else {
         showToast(data.message || "Sign in failed", "error");
       }
@@ -35,7 +43,8 @@ export default function SignIn() {
     }
   };
 
-  return <div className="relative w-full h-screen">
+  return (
+    <div className="relative w-full h-screen">
       <img
         src="/Signin.png"
         alt="SignIn"
@@ -65,9 +74,6 @@ export default function SignIn() {
               />
             </div>
 
-            
-          
-           
             <div className="flex">
               <label
                 htmlFor="password"
@@ -99,7 +105,7 @@ export default function SignIn() {
               <button
                 type="button"
                 className="outline-none border-none font-medium text-indigo-950 cursor-pointer"
-                onClick={()=>navigate("/register")}
+                onClick={() => navigate("/register")}
               >
                 Register
               </button>
@@ -108,5 +114,5 @@ export default function SignIn() {
         </form>
       </div>
     </div>
-  ;
+  );
 }
