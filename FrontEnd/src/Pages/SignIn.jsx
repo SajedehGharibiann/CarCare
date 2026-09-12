@@ -31,7 +31,7 @@ export default function SignIn() {
         showToast("Sign in successfully", "success");
         dispatch(
           login({
-            user: data.user,
+            user: data.data.user,
             token: data.data.token,
           }),
           
