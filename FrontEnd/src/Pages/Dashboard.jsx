@@ -13,7 +13,7 @@ import DashboardCards from "../Components/DashboardCards";
 import DashboardVehicles from "../Components/DashboardVehicles";
 import RecentMaintenance from "../Components/RecentMaintenance";
 import QuickActions from "../Components/QuickActions";
-
+import SearchBar from "../C"
 export default function Dashboard() {
   const user = useSelector((state) => state.auth.user);
   return (
@@ -23,15 +23,7 @@ export default function Dashboard() {
        bg-slate-50 shadow-sm shadow-slate-400/30"
       >
         <div className="relative">
-          <Search
-            size={20}
-            className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500"
-          />
-          <input
-            type="search"
-            placeholder="Search..."
-            className="outline-none bg-slate-200 py-2 pl-10 pr-3 w-[550px] rounded-lg text-sm transition focus:ring-1 focus:ring-blue-900"
-          />
+         <SearchBar/>
         </div>
 
         <div className="flex justify-between gap-5 items-center">
