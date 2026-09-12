@@ -41,7 +41,7 @@ export default function MyCars() {
       </div>
       <div className="flex justify-start items-center gap-2 ">
         <SearchBar />
-        <button className="bg-blue-900 shadow-sm py-2 px-3 text-white font-semibold rounded-[5px]">
+        <button className="bg-blue-900 shadow-sm py-2 px-3 text-white font-semibold rounded-lg">
           Add vehicle
         </button>
       </div>
