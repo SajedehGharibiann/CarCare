@@ -13,7 +13,7 @@ import DashboardCards from "../Components/DashboardCards";
 import DashboardVehicles from "../Components/DashboardVehicles";
 import RecentMaintenance from "../Components/RecentMaintenance";
 import QuickActions from "../Components/QuickActions";
-import SearchBar from "../C"
+import SearchBar from "../Components/SearchBar"
 export default function Dashboard() {
   const user = useSelector((state) => state.auth.user);
   return (
