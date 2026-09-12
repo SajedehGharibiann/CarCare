@@ -59,8 +59,8 @@ export default function Dashboard() {
         </div>
       </div>
       <div className="m-5">
-        <h1 className="font-bold text-2xl">Hello 👋 ,{user?.firstName}</h1>
-        <p className="font-semibold text-gray-900 text-[14px]">
+        <h1 className="font-bold text-2xl">Hello 👋 {user?.firstName}</h1>
+        <p className="font-semibold text-slate-500 text-[14px]">
           Let’s keep your car in great shape.
         </p>
       </div>
