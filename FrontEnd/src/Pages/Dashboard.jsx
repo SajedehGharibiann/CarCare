@@ -1,8 +1,18 @@
-import { Bell, DotIcon, DotSquareIcon, MoreHorizontalIcon, MoreVertical, Search, User2Icon } from "lucide-react";
+import {
+  Bell,
+  DotIcon,
+  DotSquareIcon,
+  MoreHorizontalIcon,
+  MoreVertical,
+  Search,
+  User2Icon,
+} from "lucide-react";
 import React from "react";
 import { useSelector } from "react-redux";
 import DashboardCards from "../Components/DashboardCards";
 import DashboardVehicles from "../Components/DashboardVehicles";
+import RecentMaintenance from "../Components/RecentMaintenance";
+import QuickActions from "../Components/QuickActions";
 
 export default function Dashboard() {
   const user = useSelector((state) => state.auth.user);
@@ -34,10 +44,7 @@ export default function Dashboard() {
               />
             ) : (
               <div className="w-10 h-10 bg-slate-100 rounded-full flex justify-center items-center">
-                <User2Icon
-                  size={32}
-                  className="text-blue-950"
-                />
+                <User2Icon size={32} className="text-blue-950" />
               </div>
             )}
             <div className="flex flex-col ">
@@ -46,7 +53,7 @@ export default function Dashboard() {
                 Profile
               </span>
             </div>
-            <MoreVertical  size={16} className="text-blue-950 cursor-pointer"/>
+            <MoreVertical size={16} className="text-blue-950 cursor-pointer" />
           </div>
           <Bell size={24} className="text-blue-900" />
         </div>
@@ -57,8 +64,22 @@ export default function Dashboard() {
           Let’s keep your car in great shape.
         </p>
       </div>
-      <DashboardCards/>
-      <DashboardVehicles/>
+      <div className="grid grid-cols-3 px-5 gap-6 w-full">
+        <div className="col-span-2">
+          <DashboardCards />
+          
+        </div>
+        <div className="col-span-1 min-w-0">
+          <RecentMaintenance />
+        </div>
+      </div>
+      <div className="col-span-2 min-w-0">
+          <DashboardVehicles />
+         
+      </div>
+      <div className="col-span-1 min-w-0">
+         <QuickActions />
+      </div>
     </div>
   );
 }
