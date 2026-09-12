@@ -72,14 +72,16 @@ export default function Dashboard() {
         <div className="col-span-1 min-w-0">
           <RecentMaintenance />
         </div>
-      </div>
-      <div className="col-span-2 min-w-0">
+         <div className="col-span-2 min-w-0">
           <DashboardVehicles />
          
       </div>
       <div className="col-span-1 min-w-0">
          <QuickActions />
       </div>
+      </div>
+     
+      
     </div>
   );
 }
