@@ -16,7 +16,7 @@ export default function AddVehicle() {
     year: "",
     plateNumber: "",
     mileage: "",
-    image: "",
+    image: null,
   });
   const handleChange = (e) => {
     const { name, value, files } = e.target;
@@ -48,7 +48,7 @@ export default function AddVehicle() {
       const result = await res.json();
       console.log(result)
       console.log("Data",result.data)
-      if (result.ok) {
+      if (result.success) {
         dispatch(addVehicles(result.data));
         navigate("/my-cars")
       }
