@@ -1,10 +1,11 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { Navigate, useLocation } from "react-router-dom";
+import { Navigate, Outlet, useLocation } from "react-router-dom";
 import Sidebar from "../Sidebar";
 
-export default function PrivateLayout({ children }) {
+export default function PrivateLayout() {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+  const location=useLocation()
   const isDashboard = location.pathname === "/dashboard";
   if (!isLoggedIn) {
     return (
@@ -21,7 +22,7 @@ export default function PrivateLayout({ children }) {
       className={`min-h-screen ${isDashboard ? "bg-slate-200" : "bg-slate-50"}`}
     >
       <Sidebar />
-      <main className="ml-60 min-h-screen ">{children}</main>
+      <main className="ml-60 min-h-screen "><Outlet/></main>
     </div>
   );
 }
