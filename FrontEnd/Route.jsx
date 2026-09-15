@@ -9,82 +9,28 @@ import Reminders from "./src/Pages/Reminders";
 import Profile from "./src/Pages/Profile";
 import SignIn from "./src/Pages/SignIn";
 import PrivateLayout from "./src/Components/PrivateLayout";
+import AddVehicle from "./src/Components/AddVehicle";
 
 export default function AppRoutes() {
   return (
     <Routes>
-      <Route
-        path="/"
-        element={
-          
-            <Home />
-         
-        }
-      />
-      <Route
-        path="/signin"
-        element={
-         
-            <SignIn />
-       
-        }
-      />
-      <Route
-        path="/register"
-        element={
-       
-            <Register />
-       
-        }
-      />
-      <Route
-        path="/services"
-        element={
-      
-            <Services />
-      
-        }
-      />
-      <Route
-        path="/dashboard"
-        element={
-          <PrivateLayout>
-            <Dashboard />
-          </PrivateLayout>
-        }
-      />
-      <Route
-        path="/my-cars"
-        element={
-          <PrivateLayout>
-            <MyCars />
-          </PrivateLayout>
-        }
-      />
-      <Route
-        path="/maintenance"
-        element={
-          <PrivateLayout>
-            <Maintenance />
-          </PrivateLayout>
-        }
-      />
-      <Route
-        path="/reminders"
-        element={
-          <PrivateLayout>
-            <Reminders />
-          </PrivateLayout>
-        }
-      />
-      <Route
-        path="/profile"
-        element={
-          <PrivateLayout>
-            <Profile />
-          </PrivateLayout>
-        }
-      />
+      <Route path="/" element={<Home />} />
+      <Route path="/signin" element={<SignIn />} />
+      <Route path="/register" element={<Register />} />
+      <Route path="/services" element={<Services />} />
+      <Route element={<PrivateLayout />}>
+        <Route path="/dashboard" element={<Dashboard />} />
+
+        <Route path="/my-cars" element={<MyCars />}>
+          <Route path="add" element={<AddVehicle />} />
+        </Route>
+
+        <Route path="/maintenance" element={<Maintenance />} />
+
+        <Route path="/reminders" element={<Reminders />} />
+
+        <Route path="/profile" element={<Profile />} />
+      </Route>
     </Routes>
   );
 }
