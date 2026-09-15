@@ -11,8 +11,7 @@ export default function MyCars() {
   const dispatch = useDispatch();
   const vehicle = useSelector((state) => state.vehicle?.vehicles??[]);
   const token = useSelector((state) => state.auth?.token);
-  console.log("vehicle from redux" ,vehicle)
-  console.log("vehicle length",vehicle.length)
+
   useEffect(() => {
     const getVehicles = async () => {
       try {
@@ -23,10 +22,8 @@ export default function MyCars() {
           },
         });
         const data = await res.json();
-        console.log("Get vehicle res",data)
-        console.log("get vehicles data",data.data)
-        if (data.ok) {
-          console.log("before dispatch",data.data)
+      
+        if (data.success) {
           dispatch(setVehicles(data.data));
         }
       } catch (error) {
