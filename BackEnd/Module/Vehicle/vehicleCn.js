@@ -5,6 +5,7 @@ export const create = catchAsync(async (req, res, next) => {
   const vehicle = await Vehicle.create({
     ...req.body,
     userId: req.userId,
+    image:req.file ?req.file.filename :""
   });
   return res.status(201).json({
     success: true,
