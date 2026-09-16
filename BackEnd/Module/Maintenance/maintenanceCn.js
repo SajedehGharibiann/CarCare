@@ -7,13 +7,7 @@ export const create = catchAsync(async (req, res, next) => {
   console.log("req.file", req.file);
   console.log("user id", req.userId);
   const maintenance = await Maintenance.create({
-    vehicleId: req.body.vehicleId,
-    title: req.body.title,
-    type: req.body.type,
-    date: req.body.date,
-    mileage: req.body.mileage,
-    cost: req.body.cost,
-    description: req.body.description,
+  ...req.body,
     userId: req.userId,
     receiptImage: req.file ? req.file.filename : "",
   });
