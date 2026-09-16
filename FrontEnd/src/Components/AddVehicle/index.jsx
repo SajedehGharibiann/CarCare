@@ -2,13 +2,14 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addVehicles, setVehicles } from "../../../Slices/vehicle";
 import { showToast } from "../../../Utils/toast";
-import { X } from "lucide-react";
+import { ImagePlus, Upload, X } from "lucide-react";
 import { replace, useNavigate } from "react-router-dom";
 
 export default function AddVehicle() {
   const dispatch = useDispatch();
   const token = useSelector((state) => state.auth?.token);
-  const navigate=useNavigate()
+  const navigate = useNavigate();
+  const [preview, setPreview] = useState("");
   const [formData, setFormData] = useState({
     brand: "",
     model: "",
@@ -20,9 +21,18 @@ export default function AddVehicle() {
   });
   const handleChange = (e) => {
     const { name, value, files } = e.target;
-    setFormData((prev)=>({
-        ...prev,[name]:files?files[0]:value
-    }))
+    if (files && files[0]) {
+      setFormData((prev) => ({
+        ...prev,
+        image: files[0],
+      }));
+      setPreview(URL.createObjectURL(files[0]));
+    } else {
+      setFormData((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    }
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -46,20 +56,22 @@ export default function AddVehicle() {
         body: data,
       });
       const result = await res.json();
-      console.log(result)
-      console.log("Data",result.data)
+      console.log(result);
+      console.log("Data", result.data);
       if (result.success) {
         dispatch(addVehicles(result.data));
-        navigate("/my-cars")
+        navigate("/my-cars");
+        showToast("Vehicle added successfully", "success");
       }
     } catch (error) {
-      showToast("Add vehicle error", error);
+      showToast("Add vehicle error", "error");
     }
   };
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-      <div className="relative bg-white w-full max-w-lg rounded-[5px] p-6 shadow-xl">
-          <div className="flex flex-col justify-start">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm px-4">
+      <div className="relative bg-white w-full max-w-2xl max-h-[90vh] rounded-[5px] p-6 shadow-2xl overflow-hidden">
+        <div className="flex items-start justify-between px-2 py-2">
+          <div>
             <h2 className="font-semibold text-xl text-slate-900">
               Add New Vehicle
             </h2>
@@ -67,77 +79,168 @@ export default function AddVehicle() {
               Add your vehicle information
             </p>
           </div>
-        
-          <button type="button" onClick={()=>navigate("/my-cars")}>
-            <X size={22} className="text-slate-600 cursor-pointer absolute top-5 right-4" />
+          <button
+            type="button"
+            onClick={() => navigate("/my-cars")}
+            className="w-8 h-8 rounded-lg flex items-center justify-center hover:bg-slate-100 transition  cursor-pointer"
+          >
+            <X size={22} className="text-slate-600" />
           </button>
-        <form onSubmit={handleSubmit} className="mt-5 grid grid-cols-2 gap-2">
-          <input
-            type="text"
-            name="brand"
-            placeholder="Brand"
-            value={formData.brand}
-            onChange={handleChange}
-            className="rounded-lg border border-slate-200 px-3 py-2 bg-slate-100 outline-none focus:ring-1 focus:ring-blue-900"
-          />
-          <input
-            type="text"
-            name="model"
-            placeholder="Model"
-            value={formData.model}
-            onChange={handleChange}
-            className="rounded-lg border border-slate-200 px-3 py-2 bg-slate-100 outline-none focus:ring-1 focus:ring-blue-900"
-          />
-          <input
-            type="text"
-            name="color"
-            placeholder="Color"
-            value={formData.color}
-            onChange={handleChange}
-            className="rounded-lg border border-slate-200 px-3 py-2 bg-slate-100 outline-none focus:ring-1 focus:ring-blue-900"
-          />
-          <input
-            type="number"
-            name="year"
-            placeholder="Year"
-            value={formData.year}
-            onChange={handleChange}
-            className="rounded-lg border border-slate-200 px-3 py-2 bg-slate-100 outline-none focus:ring-1 focus:ring-blue-900"
-          />
-          <input
-            type="text"
-            name="plateNumber"
-            placeholder="PlateNumber"
-            value={formData.plateNumber}
-            onChange={handleChange}
-            className="rounded-lg border border-slate-200 px-3 py-2 bg-slate-100 outline-none focus:ring-1 focus:ring-blue-900"
-          />
-          <input
-            type="number"
-            name="mileage"
-            placeholder="Mileage"
-            value={formData.mileage}
-            onChange={handleChange}
-            className="rounded-lg border border-slate-200 px-3 py-2 bg-slate-100 outline-none focus:ring-1 focus:ring-blue-900"
-          />
-          <input
-            type="file"
-            name="image"
-            accept="image/*"
-            onChange={handleChange}
-            className="col-span-2 text-sm"
-          />
-          <div className="flex justify-between items-center">
-            <button type="button" onClick={()=>navigate("/my-cars")} className="col-span-2 bg-transparent text-black font-semibold rounded-lg px-2  py-2.5 border border-slate-800 cursor-pointer">
+        </div>
+
+        <form onSubmit={handleSubmit} className="py-4 grid grid-cols-2 gap-2">
+          <div>
+            <label className="text-sm font-semibold text-slate-500">
+              Vehicle Image
+            </label>
+
+            <label
+              htmlFor="vehicle-image"
+              className="mt-2 h-50 border-2 border-slate-200 rounded-xl bg-slate-50 hover:bg-slate-100 cursor-pointer flex flex-col items-center justify-center overflow-hidden transition"
+            >
+              {preview ? (
+                <img
+                  src={preview}
+                  alt="Vehicle Preview"
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <>
+                  <div className="w-12 h-12 rounded-full bg-white border border-slate-200 flex justify-center items-center">
+                    <ImagePlus size={22} className="text-slate-200" />
+                  </div>
+                  <p className="text-sm font-semibold text-slate-600 mt-3">
+                    Upload image
+                  </p>
+                  <p className="text-xs text-slate-400 mt-1">
+                    Click to upload or drag and drop
+                  </p>
+                  <div className="flex items-center gap-1 mt-3 text-xs text-slate-400">
+                    <Upload size={13} />
+                    JPG, PNG up to 5MB
+                  </div>
+                </>
+              )}
+            </label>
+            <input
+              id="vehicle-image"
+              type="file"
+              name="image"
+              accept="image/*"
+              onChange={handleChange}
+              className="hidden"
+            />
+          </div>
+
+          <div>
+            <div className="grid grid-cols-2 gap-4">
+      
+              <div className="col-span-2">
+                <label className="text-xs font-semibold text-slate-600">
+                  Brand
+                </label>
+
+                <input
+                  type="text"
+                  name="brand"
+                  placeholder="brand"
+                  value={formData.brand}
+                  onChange={handleChange}
+                  className="mt-1.5 w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm outline-none focus:bg-white focus:border-blue-900"
+                />
+              </div>
+
+            
+              <div>
+                <label className="text-xs font-semibold text-slate-600">
+                  Model
+                </label>
+
+                <input
+                  type="text"
+                  name="model"
+                  placeholder="model"
+                  value={formData.model}
+                  onChange={handleChange}
+                  className="mt-1.5 w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm outline-none focus:bg-white focus:border-blue-900"
+                />
+              </div>
+
+          
+              <div>
+                <label className="text-xs font-semibold text-slate-600">
+                  Year
+                </label>
+
+                <input
+                  type="number"
+                  name="year"
+                  placeholder="year"
+                  value={formData.year}
+                  onChange={handleChange}
+                  className="mt-1.5 w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm outline-none focus:bg-white focus:border-blue-900"
+                />
+              </div>
+
+              <div>
+                <label className="text-xs font-semibold text-slate-600">
+                  Color
+                </label>
+
+                <input
+                  type="text"
+                  name="color"
+                  placeholder="color"
+                  value={formData.color}
+                  onChange={handleChange}
+                  className="mt-1.5 w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm outline-none focus:bg-white focus:border-blue-900"
+                />
+              </div>
+
+           
+              <div>
+                <label className="text-xs font-semibold text-slate-600">
+                  Mileage
+                </label>
+                <input
+                  type="number"
+                  name="mileage"
+                  placeholder="mileage"
+                  value={formData.mileage}
+                  onChange={handleChange}
+                  className="mt-1.5 w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm outline-none focus:bg-white focus:border-blue-900"
+                />
+              </div>
+              <div className="col-span-2">
+                <label className="text-xs font-semibold text-slate-600">
+                  Plate Number
+                </label>
+                <input
+                  type="text"
+                  name="plateNumber"
+                  placeholder="plateNumber"
+                  value={formData.plateNumber}
+                  onChange={handleChange}
+                  className="mt-1.5 w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm outline-none focus:bg-white focus:border-blue-900"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="col-span-2 border-t border-slate-100 pt-5 flex justify-end gap-3">
+            <button
+              type="button"
+              onClick={() => navigate("/my-cars")}
+              className="text-slate-700 font-semibold rounded-lg px-2  py-2.5 border border-slate-400 cursor-pointer"
+            >
               Cancel
             </button>
             <button
               type="submit"
-              className="col-span-2 rounded-lg bg-blue-900 px-2 py-2.5 font-semibold text-white hover:bg-blue-950 cursor-pointer"
+              className="rounded-lg bg-blue-900 px-2 py-2.5 font-semibold text-white hover:bg-blue-950 cursor-pointer shadow-sm"
             >
               Add Vehicle
             </button>
-            
           </div>
         </form>
       </div>
