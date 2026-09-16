@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Search, CarFront, Wrench, Bell } from "lucide-react";
 import { useSelector } from "react-redux";
 
-export default function SearchBar() {
+export default function SearchBar({inputClassName=""}) {
   const [search, setSearch] = useState("");
 
   const vehicles = useSelector((state) => state.vehicle?.vehicles ?? []);
@@ -60,7 +60,7 @@ export default function SearchBar() {
         placeholder="Search..."
         value={search}
         onChange={(e) => setSearch(e.target.value)}
-        className="w-full rounded-lg bg-slate-200 py-2 pl-10 pr-3 text-sm outline-none transition focus:ring-1 focus:ring-blue-900"
+        className={`w-full rounded-lg bg-slate-200 py-2 pl-10 pr-3 text-sm outline-none transition focus:ring-1 focus:ring-blue-900 ${inputClassName}`} 
       />
 
       {searchText && (
