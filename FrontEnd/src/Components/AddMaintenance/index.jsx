@@ -93,7 +93,7 @@ export default function AddMaintenance() {
       });
       const result = await res.json();
 console.log("result",result.data)
-console.log("is array",Array.isArray(result.data))
+console.log("is array",Array.isArray(result))
       if (result.success) {
         dispatch(addMaintenance(result.data));
         navigate("/maintenance");
