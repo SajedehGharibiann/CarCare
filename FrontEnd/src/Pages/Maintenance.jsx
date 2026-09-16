@@ -8,7 +8,7 @@ import { MoreVertical, Wrench } from "lucide-react";
 
 export default function Maintenance() {
   const maintenance = useSelector(
-    (state) => state.maintenances?.maintenance ?? [],
+    (state) => state.maintenance?.maintenance ?? [],
   );
   const token = useSelector((state) => state.auth?.token ?? []);
   const dispatch = useDispatch();
