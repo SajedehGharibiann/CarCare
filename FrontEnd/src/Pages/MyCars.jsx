@@ -9,7 +9,7 @@ import { Link, Outlet } from "react-router-dom";
 
 export default function MyCars() {
   const dispatch = useDispatch();
-  const vehicle = useSelector((state) => state.vehicle?.vehicles??[]);
+  const vehicle = useSelector((state) => state.vehicle?.vehicles ?? []);
   const token = useSelector((state) => state.auth?.token);
 
   useEffect(() => {
@@ -22,7 +22,7 @@ export default function MyCars() {
           },
         });
         const data = await res.json();
-      
+
         if (data.success) {
           dispatch(setVehicles(data.data));
         }
@@ -34,7 +34,7 @@ export default function MyCars() {
       getVehicles();
     }
   }, [dispatch, token]);
-  console.log("vehicles",vehicle)
+  console.log("vehicles", vehicle);
   return (
     <div className="mx-5">
       <div className="flex flex-col py-4">
@@ -45,24 +45,29 @@ export default function MyCars() {
       </div>
       <div className="flex justify-start items-center gap-2 ">
         <SearchBar />
-        <Link to="/my-cars/add" className="bg-blue-900 shadow-sm py-2 px-3 text-white font-semibold rounded-lg">
-          Add vehicle
+        <Link
+          to="/my-cars/add"
+          className="bg-blue-900 py-2 px-3 text-white font-semibold rounded-lg shadow-md"
+        >
+          Add Vehicle
         </Link>
-        
       </div>
-      <div className="grid grid-cols-3 md:grid-cols-4 gap-5 mt-6">
+      <div className=" mt-6">
         {vehicle.length > 0 ? (
-          vehicle.map((item) => (
-            <VehicleCards key={item._id} vehicle={item} />
-          ))
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-5">
+            {vehicle.map((item) => (
+              <VehicleCards key={item._id} vehicle={item} />
+            ))}
+          </div>
         ) : (
-          <div className="col-span-full text-center py-16">
+          <div className="bg-white border border-slate-200 rounded-xl py-20 text-center">
             <p className="text-slate-500">No vehicle available</p>
+            <Link to="/my-cars/add" className="inline-flex items-center gap-2 mt-4 bg-blue-900 text-white px-4 py-2 rounded-lg text-sm font-semibold"></Link>
           </div>
         )}
       </div>
-     
-      <Outlet/>
+
+      <Outlet />
     </div>
   );
 }
