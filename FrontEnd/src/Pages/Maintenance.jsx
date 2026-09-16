@@ -61,7 +61,7 @@ export default function Maintenance() {
         </Link>
       </div>
 
-      <div className="mt-4 bg-white rounded-[5px] border border-slate-200 shadow-sm overflow-hidden">
+      <div className="mt-4 text-center bg-white rounded-[5px] border border-slate-200 shadow-sm overflow-hidden">
         <table className="w-full">
           <thead className="bg-slate-200">
             <tr className="border border-slate-200">
