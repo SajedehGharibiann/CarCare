@@ -1,7 +1,6 @@
 import { Router } from "express";
 import { create, getAll, getOne, update, remove } from "./vehicleCn.js";
 import isLogin from "../../Middleware/isLogin.js";
-import upload from "../../Middleware/upload.js";
 import uploadVehicle from "../../Middleware/uploadVehicle.js";
 
 const vehicleRouter = Router();
