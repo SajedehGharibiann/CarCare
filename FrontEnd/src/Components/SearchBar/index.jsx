@@ -7,7 +7,7 @@ export default function SearchBar({inputClassName=""}) {
 
   const vehicles = useSelector((state) => state.vehicle?.vehicles ?? []);
 
-  const maintenances = useSelector(
+  const maintenancee = useSelector(
     (state) => state.maintenance?.maintenance ?? [],
   );
 
@@ -27,7 +27,7 @@ export default function SearchBar({inputClassName=""}) {
         icon: <CarFront size={17} />,
       })),
 
-    ...maintenances
+    ...maintenancee
       .filter((item) =>
         `${item.title} ${item.type}`.toLowerCase().includes(searchText),
       )
