@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { showToast } from "../../../Utils/toast";
-import { setMaintenance } from "../../../Slices/maintenance";
+import { addMaintenance } from "../../../Slices/maintenance";
 import { useNavigate } from "react-router-dom";
 import { ImagePlus, Upload, X } from "lucide-react";
+import { setVehicles } from "../../../Slices/vehicle";
 
 export default function AddMaintenance() {
   const [formData, setFormData] = useState({
@@ -20,8 +21,35 @@ export default function AddMaintenance() {
   const navigate = useNavigate();
   const [preview, setPreview] = useState("");
   const vehicle = useSelector((state) => state.vehicle?.vehicles ?? []);
-  console.log("vehicles",vehicle)
+  console.log("vehicles", vehicle);
   const token = useSelector((state) => state.auth?.token);
+
+  useEffect(() => {
+    const getVehicles = async () => {
+      try {
+        const res = await fetch(` ${import.meta.env.VITE_API_URL}/vehicle`, {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        const result = await res.json();
+
+        console.log("Vehicles for maintenance:", result);
+
+        if (result.success) {
+          dispatch(setVehicles(result.data));
+        }
+      } catch (error) {
+        console.log("Get vehicles error:", error);
+      }
+    };
+
+    if (token && vehicle.length === 0) {
+      getVehicles();
+    }
+  }, [token, vehicle.length, dispatch]);
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
@@ -64,10 +92,12 @@ export default function AddMaintenance() {
         body: data,
       });
       const result = await res.json();
-      
+console.log("result",result.data)
+console.log("is array",Array.isArray(result.data))
       if (result.success) {
-        dispatch(AddMaintenance(result.data));
+        dispatch(addMaintenance(result.data));
         navigate("/maintenance");
+        showToast("Maintenance added successfully", "success");
       }
     } catch (error) {
       showToast("Something went wrong", "error");
@@ -141,12 +171,13 @@ export default function AddMaintenance() {
               <label className="text-xs font-semibold text-slate-600">
                 Vehicle
               </label>
-                  <select
+              <select
                 name="vehicleId"
                 value={formData.vehicleId}
                 onChange={handleChange}
+                className="mt-1 w-full rounded-lg text-slate-800 border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm outline-none focus:bg-white focus:border-blue-900"
               >
-                <option value="">Select vehicle</option>
+                <option value="" className="text-slate-500">Select vehicle</option>
 
                 {vehicle.map((car) => (
                   <option key={car._id} value={car._id}>
@@ -154,30 +185,26 @@ export default function AddMaintenance() {
                   </option>
                 ))}
               </select>
-{/* 
-              <input
-                type="text"
-                name="vehicleId"
-                placeholder="vehicle"
-                value={formData.vehicleId}
-                onChange={handleChange}
-                className="mt-1.5 w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm outline-none focus:bg-white focus:border-blue-900"
-              /> */}
-          
+           
             </div>
             <div>
               <label className="text-xs font-semibold text-slate-600">
                 Type
               </label>
-
-              <input
-                type="text"
+              <select
                 name="type"
-                placeholder="type"
                 value={formData.type}
                 onChange={handleChange}
-                className="mt-1.5 w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm outline-none focus:bg-white focus:border-blue-900"
-              />
+                className="mt-1.5 w-full text-slate-800 rounded-lg border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm outline-none focus:bg-white focus:border-blue-900"
+              >
+                <option value="" className="text-slate-500">Select Type</option>
+                <option value="Maintenance" className="text-slate-700">Maintenance</option>
+                <option value="Repair" className="text-slate-700">Repair</option>
+                <option value="Oil Change" className="text-slate-700">Oil Change</option>
+                <option value="Tire" className="text-slate-700">Tire</option>
+                <option value="Battery" className="text-slate-700">Battery</option>
+                <option value="Other" className="text-slate-700">Other</option>
+              </select>
             </div>
           </div>
           <div>
