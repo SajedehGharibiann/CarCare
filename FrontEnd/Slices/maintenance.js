@@ -5,7 +5,7 @@ const initialState = {
 };
 
 export const maintenancesSlice = createSlice({
-  name: "maintenances",
+  name: "maintenance",
   initialState,
 
   reducers: {
