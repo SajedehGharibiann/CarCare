@@ -4,9 +4,9 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 export default function RecentMaintenance() {
-  const maintenance = useSelector((state) => state.maintenance.maintenances);
+  const maintenancee = useSelector((state) => state.maintenance.maintenance);
 
-  const recentMaintenance = [...maintenance]
+  const recentMaintenance = [...maintenancee]
     .sort((a, b) => new Date(b.date) - new Date(a.date))
     .slice(0, 2);
 
