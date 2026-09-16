@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  maintenances: [],
+  maintenance: [],
 };
 
 export const maintenancesSlice = createSlice({
@@ -10,14 +10,14 @@ export const maintenancesSlice = createSlice({
 
   reducers: {
     setMaintenance: (state, action) => {
-      state.maintenances = action.payload;
+      state.maintenance = action.payload;
     },
     addMaintenance: (state, action) => {
-      state.maintenances.push(action.payload);
+      state.maintenance.push(action.payload);
     },
     removeMaintenance: (state, action) => {
-      state.maintenances = state.maintenances.filter(
-        (maintenance) => maintenance._id !== action.payload,
+      state.maintenance = state.maintenance.filter(
+        (item) => item._id !== action.payload,
       );
     },
   },
