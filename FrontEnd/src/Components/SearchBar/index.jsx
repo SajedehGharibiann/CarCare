@@ -8,7 +8,7 @@ export default function SearchBar({inputClassName=""}) {
   const vehicles = useSelector((state) => state.vehicle?.vehicles ?? []);
 
   const maintenances = useSelector(
-    (state) => state.maintenance?.maintenances ?? [],
+    (state) => state.maintenance?.maintenance ?? [],
   );
 
   const reminders = useSelector((state) => state.reminder?.reminders ?? []);
