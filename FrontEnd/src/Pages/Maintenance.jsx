@@ -90,34 +90,57 @@ export default function Maintenance() {
               maintenance.map((item) => (
                 <tr
                   key={item._id}
-                  className="border-b border-slate-100 last-border-0 hover:bg-slate-50 transition"
+                  className="border-b border-slate-100 hover:bg-slate-50 transition"
                 >
                   <td className="px-5 py-4">
                     <div className="flex items-center gap-3">
-                      <div className="w-9 h-9 rounded-lg bg-slate-100 flex items-center">
+                      <div className="w-9 h-9 rounded-lg bg-slate-100 flex items-center justify-center">
                         <Wrench size={17} className="text-slate-600" />
                       </div>
+
                       <div>
                         <p className="text-sm font-semibold text-slate-700">
                           {item.title}
                         </p>
-                        <p className="text-xs text-slate-400">{item.type}</p>
+
+                        <p className="text-xs text-slate-400">
+                          {item.type || "-"}
+                        </p>
                       </div>
                     </div>
                   </td>
+
+                  <td className="px-5 py-4">
+                    <p className="text-sm font-semibold text-slate-700">
+                      {item.vehicleId?.brand
+                        ? `${item.vehicleId.brand} ${item.vehicleId.model}`
+                        : item.vehicleId || "-"}
+                    </p>
+                  </td>
+
                   <td className="px-5 py-4">
                     <p className="text-sm text-slate-600">
                       {item.date
                         ? new Date(item.date).toLocaleDateString()
-                        : ""}
+                        : "-"}
                     </p>
                   </td>
+
+                  <td className="px-5 py-4">
+                    <p className="text-sm text-slate-600">
+                      {item.mileage
+                        ? `${item.mileage.toLocaleString()} km`
+                        : "-"}
+                    </p>
+                  </td>
+
                   <td className="px-5 py-4">
                     <p className="text-sm font-semibold text-slate-700">
-                      {item.cost ? `${item.cost.toLocalString()}` : "-"}
+                      {item.cost ? `${item.cost.toLocaleString()}` : "-"}
                     </p>
                   </td>
-                  <td className="px-5 py-4 items-center">
+
+                  <td className="px-5 py-4">
                     <button className="w-8 h-8 inline-flex items-center justify-center rounded-lg hover:bg-slate-100">
                       <MoreVertical size={17} className="text-slate-500" />
                     </button>
@@ -136,7 +159,7 @@ export default function Maintenance() {
           </tbody>
         </table>
       </div>
-      <Outlet/>
+      <Outlet />
     </div>
   );
 }
