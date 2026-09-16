@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import SearchBar from "../Components/SearchBar";
 import { useDispatch, useSelector } from "react-redux";
 import { showToast } from "../../Utils/toast";
@@ -54,7 +54,7 @@ export default function Maintenance() {
         </select>
         <SearchBar inputClassName="bg-white border border-slate-200" />
         <Link
-          to="/my-cars/add"
+          to="/maintenance/add"
           className="bg-blue-900 shadow-md py-2 px-3 text-white font-semibold rounded-lg"
         >
           Add Record
@@ -136,6 +136,7 @@ export default function Maintenance() {
           </tbody>
         </table>
       </div>
+      <Outlet/>
     </div>
   );
 }
