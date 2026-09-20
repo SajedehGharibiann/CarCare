@@ -11,6 +11,7 @@ import SignIn from "./src/Pages/SignIn";
 import PrivateLayout from "./src/Components/PrivateLayout";
 import AddVehicle from "./src/Components/AddVehicle";
 import AddMaintenance from "./src/Components/AddMaintenance";
+import AddReminder from "./src/Components/AddReminder";
 
 export default function AppRoutes() {
   return (
@@ -30,7 +31,9 @@ export default function AppRoutes() {
         <Route path="add" element={<AddMaintenance/>}/>
         </Route>
 
-        <Route path="/reminders" element={<Reminders />} />
+        <Route path="/reminders" element={<Reminders />} >
+        <Route path="add" element={<AddReminder/>}/>
+        </Route>
 
         <Route path="/profile" element={<Profile />} />
       </Route>
