@@ -4,12 +4,13 @@ import SearchBar from "../Components/SearchBar";
 import { useDispatch, useSelector } from "react-redux";
 import { showToast } from "../../Utils/toast";
 import { setMaintenance } from "../../Slices/maintenance";
-import { MoreVertical, Wrench } from "lucide-react";
+import { Image, MoreVertical, Wrench } from "lucide-react";
 
 export default function Maintenance() {
   const maintenance = useSelector(
     (state) => state.maintenance?.maintenance ?? [],
   );
+  const vehicle=useSelector((state)=>state.vehicle?.vehicles??[])
   const token = useSelector((state) => state.auth?.token ?? []);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -21,8 +22,11 @@ export default function Maintenance() {
           },
         });
         const data = await res.json();
+        console.log("data",data)
+        console.log("receipt image",data.data?.[0]?.receiptImage)
         if (data.success) {
           dispatch(setMaintenance(data.data));
+          console.log(data);
         }
       } catch (error) {
         showToast("Something went wrong", "error");
@@ -32,6 +36,7 @@ export default function Maintenance() {
       getMaintenance();
     }
   }, [dispatch, token]);
+ 
   return (
     <div className="mx-5">
       <div className="flex flex-col py-4">
@@ -81,14 +86,24 @@ export default function Maintenance() {
                 Cost
               </th>
               <th className="px-5 py-4 text-sm font-semibold text-slate-600">
+               Receipt Image 
+              </th>
+              <th className="px-5 py-4 text-sm font-semibold text-slate-600">
                 Action
               </th>
             </tr>
           </thead>
           <tbody>
             {maintenance.length > 0 ? (
-              maintenance.map((item) => (
-                <tr
+              maintenance.map((item) => {
+                   const imageUrl = item.receiptImage
+    ? `${import.meta.env.VITE_API_URL.replace(
+        "/api",
+        "",
+      )}/upload/Maintenance/${item.receiptImage}`
+    : null;
+                return (
+                  <tr
                   key={item._id}
                   className="border-b border-slate-100 hover:bg-slate-50 transition"
                 >
@@ -111,11 +126,10 @@ export default function Maintenance() {
                   </td>
 
                   <td className="px-5 py-4">
-                    <p className="text-sm font-semibold text-slate-700">
-                      {item.vehicleId?.brand
-                        ? `${item.vehicleId.brand} ${item.vehicleId.model}`
-                        : item.vehicleId || "-"}
-                    </p>
+                    {(()=>{
+                      const carName=vehicle.find((name)=>name._id===item.vehicleId);
+                      return carName?`${carName.brand} ${carName.model}`:"Unknown Vehicle"
+                    })()}
                   </td>
 
                   <td className="px-5 py-4">
@@ -139,14 +153,26 @@ export default function Maintenance() {
                       {item.cost ? `${item.cost.toLocaleString()}` : "-"}
                     </p>
                   </td>
-
+<td className="px-5 py-4 items-center">
+                  {item.receiptImage ? ( <img
+                      src={imageUrl}
+                      alt={item.title}
+                      className="w-12 h-12 object-cover inline-flex items-center justify-center rounded-2xl"
+                    />):(<div className="flex flex-col"><span>No receipt image
+                      <Image size={16}/>
+                    </span></div>)} 
+                   
+                    
+                  </td>
                   <td className="px-5 py-4">
                     <button className="w-8 h-8 inline-flex items-center justify-center rounded-lg hover:bg-slate-100">
                       <MoreVertical size={17} className="text-slate-500" />
                     </button>
                   </td>
+                  
                 </tr>
-              ))
+                );
+})
             ) : (
               <tr>
                 <td colSpan={6} className="py-16 text-center">
@@ -156,6 +182,7 @@ export default function Maintenance() {
                 </td>
               </tr>
             )}
+                
           </tbody>
         </table>
       </div>
