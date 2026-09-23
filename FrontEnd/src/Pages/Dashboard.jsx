@@ -7,15 +7,86 @@ import {
   Search,
   User2Icon,
 } from "lucide-react";
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import DashboardCards from "../Components/DashboardCards";
 import DashboardVehicles from "../Components/DashboardVehicles";
 import RecentMaintenance from "../Components/RecentMaintenance";
 import QuickActions from "../Components/QuickActions";
 import SearchBar from "../Components/SearchBar"
+import { setMaintenance } from "../../Slices/maintenance";
+import { showToast } from "../../Utils/toast";
+import { setReminders } from "../../Slices/reminder";
+import { setVehicles } from "../../Slices/vehicle";
+import { Outlet } from "react-router-dom";
 export default function Dashboard() {
-  const user = useSelector((state) => state.auth.user);
+  
+  const user=useSelector((state)=>state.auth?.user)
+  const token = useSelector((state) => state.auth?.token);
+  const dispatch=useDispatch()
+  useEffect(() => {
+    if (!token) return;
+
+    const getDashboardData = async () => {
+      try {
+        
+        const vehicleRes = await fetch(
+          `${import.meta.env.VITE_API_URL}/vehicle`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        const vehicleResult = await vehicleRes.json();
+
+        if (vehicleResult.success) {
+          dispatch(setVehicles(vehicleResult.data));
+        }
+
+        const reminderRes = await fetch(
+          `${import.meta.env.VITE_API_URL}/reminder`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        const reminderResult = await reminderRes.json();
+
+        if (reminderResult.success) {
+          dispatch(setReminders(reminderResult.data));
+        }
+
+        
+        const maintenanceRes = await fetch(
+          `${import.meta.env.VITE_API_URL}/maintenance`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        const maintenanceResult = await maintenanceRes.json();
+
+        if (maintenanceResult.success) {
+          dispatch(setMaintenance(maintenanceResult.data));
+        }
+
+      } catch (error) {
+        console.log("Dashboard data error:", error);
+      }
+    };
+
+    getDashboardData();
+  }, [token, dispatch]);
+
   return (
     <div>
       <div
@@ -30,7 +101,7 @@ export default function Dashboard() {
           <div className="flex gap-2 justify-center align-middle items-center">
             {user?.profileImage ? (
               <img
-                src={user.profileImage}
+                src={`${import.meta.env.VITE_API_URL.replace("/api", "")}/upload/${user.profileImage}`}
                 alt="Profile"
                 className="w-10 h-10 rounded-full object-cover"
               />
@@ -73,7 +144,7 @@ export default function Dashboard() {
       </div>
       </div>
      
-      
+      <Outlet/>
     </div>
   );
 }
