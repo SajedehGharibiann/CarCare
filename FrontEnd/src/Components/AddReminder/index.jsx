@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { X, CalendarDays } from "lucide-react";
+import { X } from "lucide-react";
 import { addReminder } from "../../../Slices/reminder";
 import { showToast } from "../../../Utils/toast";
+import { setVehicles } from "../../../Slices/vehicle";
 
 export default function AddReminder() {
   const dispatch = useDispatch();
@@ -11,7 +12,11 @@ export default function AddReminder() {
 
   const token = useSelector((state) => state.auth?.token);
 
-  const vehicle = useSelector((state) => state.vehicle?.vehicles ?? []);
+
+  
+  const vehicle = useSelector(
+    (state) => state.vehicle?.vehicles ?? []
+  );
 
   const [formData, setFormData] = useState({
     vehicleId: "",
@@ -19,6 +24,36 @@ export default function AddReminder() {
     date: "",
     description: "",
   });
+
+  useEffect(() => {
+    const getVehicles = async () => {
+      try {
+        const res = await fetch(
+          `${import.meta.env.VITE_API_URL}/vehicle`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        const result = await res.json();
+
+        console.log("Vehicles for reminder:", result);
+
+        if (result.success) {
+          dispatch(setVehicles(result.data));
+        }
+      } catch (error) {
+        console.log("Get vehicles error:", error);
+      }
+    };
+
+    if (token && vehicle.length === 0) {
+      getVehicles();
+    }
+  }, [token, vehicle.length, dispatch]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -37,8 +72,8 @@ export default function AddReminder() {
       return;
     }
 
-    if (!formData.title.trim()) {
-      showToast("Please enter reminder title", "error");
+    if (!formData.title) {
+      showToast("Please enter a reminder title", "error");
       return;
     }
 
@@ -48,18 +83,21 @@ export default function AddReminder() {
     }
 
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/reminder`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(formData),
-      });
+      const res = await fetch(
+        `${import.meta.env.VITE_API_URL}/reminder`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(formData),
+        }
+      );
 
       const result = await res.json();
 
-      console.log(result);
+      console.log("Reminder result:", result);
 
       if (result.success) {
         dispatch(addReminder(result.data));
@@ -68,7 +106,10 @@ export default function AddReminder() {
 
         navigate("/reminders");
       } else {
-        showToast(result.message || "Failed to add reminder", "error");
+        showToast(
+          result.message || "Failed to add reminder",
+          "error"
+        );
       }
     } catch (error) {
       console.log("Add reminder error:", error);
@@ -77,9 +118,12 @@ export default function AddReminder() {
     }
   };
 
+  console.log("add reminder vehicles:", vehicle);
+
   return (
     <div className="fixed inset-0 z-50 bg-slate-900/50 flex items-center justify-center p-4">
       <div className="w-full max-w-lg bg-white rounded-2xl shadow-xl">
+
         <div className="flex items-center justify-between px-6 py-4 border-b border-slate-200">
           <div>
             <h2 className="text-lg font-semibold text-slate-900">
@@ -101,6 +145,7 @@ export default function AddReminder() {
         </div>
 
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
+
           <div>
             <label className="block text-sm font-medium text-slate-700 mb-1.5">
               Select Vehicle
@@ -112,7 +157,9 @@ export default function AddReminder() {
               onChange={handleChange}
               className="w-full px-3 py-2.5 border border-slate-200 rounded-lg text-sm text-slate-700 bg-white outline-none focus:border-blue-500"
             >
-              <option value="">Select vehicle</option>
+              <option value="">
+                Select vehicle
+              </option>
 
               {vehicle.map((item) => (
                 <option key={item._id} value={item._id}>
@@ -142,15 +189,13 @@ export default function AddReminder() {
               Date
             </label>
 
-            <div className="relative">
-              <input
-                type="date"
-                name="date"
-                value={formData.date}
-                onChange={handleChange}
-                className="w-full px-3 py-2.5 border border-slate-200 rounded-lg text-sm outline-none focus:border-blue-500"
-              />
-            </div>
+            <input
+              type="date"
+              name="date"
+              value={formData.date}
+              onChange={handleChange}
+              className="w-full px-3 py-2.5 border border-slate-200 rounded-lg text-sm outline-none focus:border-blue-500"
+            />
           </div>
 
           <div>
@@ -184,6 +229,7 @@ export default function AddReminder() {
               Add Reminder
             </button>
           </div>
+
         </form>
       </div>
     </div>
