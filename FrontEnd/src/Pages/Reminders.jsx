@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
   Bell,
   Wrench,
@@ -7,22 +7,58 @@ import {
   CircleAlert,
   Battery,
   MoreVertical,
-  Plus,
 } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import SearchBar from "../Components/SearchBar";
+import { setReminders } from "../../Slices/reminder";
 
 export default function Reminders() {
   const [filter, setFilter] = useState("all");
+
+  const dispatch = useDispatch();
+
+  const token = useSelector((state) => state.auth?.token);
 
   const reminders = useSelector((state) => state.reminder?.reminders ?? []);
 
   const vehicle = useSelector((state) => state.vehicle?.vehicles ?? []);
 
+  useEffect(() => {
+    const getReminders = async () => {
+      try {
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/reminder`, {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        const result = await res.json();
+
+        console.log("Reminders from API:", result);
+
+        if (result.success) {
+          dispatch(setReminders(result.data));
+        }
+      } catch (error) {
+        console.log("Get reminders error:", error);
+      }
+    };
+
+    if (token) {
+      getReminders();
+    }
+  }, [token, dispatch]);
+
+  console.log("REMINDERS FROM REDUX:", reminders);
+  console.log("VEHICLES FROM REDUX:", vehicle);
+
   const getVehicleName = (vehicleId) => {
     const car = vehicle.find((v) => v._id === vehicleId);
 
-    if (!car) return "Unknown Vehicle";
+    if (!car) {
+      return "Unknown Vehicle";
+    }
 
     return `${car.brand} ${car.model}`;
   };
@@ -87,6 +123,7 @@ export default function Reminders() {
     reminderDate.setHours(0, 0, 0, 0);
 
     const diffTime = reminderDate - today;
+
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
     if (diffDays < 0) {
@@ -101,9 +138,17 @@ export default function Reminders() {
   };
 
   const getStatusText = (status) => {
-    if (status === "completed") return "Completed";
-    if (status === "overdue") return "Overdue";
-    if (status === "dueSoon") return "Due Soon";
+    if (status === "completed") {
+      return "Completed";
+    }
+
+    if (status === "overdue") {
+      return "Overdue";
+    }
+
+    if (status === "dueSoon") {
+      return "Due Soon";
+    }
 
     return "Upcoming";
   };
@@ -185,9 +230,8 @@ export default function Reminders() {
 
     return true;
   });
-
   return (
-    <div className="min-h-screen bg-slate-50 px-8 py-7">
+    <div className="min-h-screen mx-5">
       <div className="flex flex-col py-4">
         <h1 className="text-2xl font-bold text-slate-900">Reminders</h1>
 
@@ -202,7 +246,7 @@ export default function Reminders() {
           to="/reminders/add"
           className="bg-blue-900 py-2 px-3 text-white font-semibold rounded-lg shadow-md"
         >
-          Add Vehicle
+          Add Reminder
         </Link>
       </div>
 
@@ -318,7 +362,6 @@ export default function Reminders() {
                   </p>
                 )}
 
-                {/* Bottom */}
                 <div className="flex items-center justify-between mt-5 pt-4 border-t border-slate-100">
                   <div className="flex items-center gap-2">
                     <CircleAlert size={16} className="text-slate-400" />
@@ -349,6 +392,7 @@ export default function Reminders() {
           })}
         </div>
       )}
+      <Outlet />
     </div>
   );
 }
