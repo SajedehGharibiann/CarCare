@@ -17,7 +17,7 @@ export default function QuickActions() {
 
       <div className="flex flex-col gap-0.5">
         <Link
-          to="/vehicles/add"
+          to="/my-cars/add"
           className="flex items-center gap-3 p-1 rounded-lg bg-slate-50 hover:bg-blue-50 transition"
         >
           <div className="w-9 h-9 rounded-lg bg-blue-100 flex items-center justify-center shrink-0">
