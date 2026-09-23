@@ -4,16 +4,25 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 export default function RecentMaintenance() {
-  const maintenancee = useSelector((state) => state.maintenance.maintenance);
+  const maintenance = useSelector(
+    (state) => state.maintenance?.maintenance ?? [],
+  );
 
-  const recentMaintenance = [...maintenancee]
+  const vehicles = useSelector((state) => state.vehicle?.vehicles ?? []);
+
+  const recentMaintenance = [...maintenance]
     .sort((a, b) => new Date(b.date) - new Date(a.date))
     .slice(0, 2);
+
+  const getVehicle = (vehicleId) => {
+    return vehicles.find((vehicle) => vehicle._id === vehicleId);
+  };
 
   return (
     <div className="bg-slate-50 shadow-sm shadow-slate-400/30 rounded-[5px] p-4 w-full">
       <div className="flex justify-between items-center mb-4">
         <h3 className="font-bold text-slate-800">Recent Maintenance</h3>
+
         <Link
           to="/maintenance"
           className="flex items-center gap-1 text-blue-600 font-bold text-xs"
@@ -22,32 +31,58 @@ export default function RecentMaintenance() {
           <ArrowRight size={13} className="text-blue-600 font-bold" />
         </Link>
       </div>
+
       {recentMaintenance.length > 0 ? (
         <div className="flex flex-col gap-3">
-          {recentMaintenance.map((item) => (
-            <div
-              key={item._id}
-              className="flex items-center justify-between bg-white border border-slate-200 rounded-lg p-3"
-            >
-              <div className="flex items-center gap-3">
-                <div className="w-9 h-9 rounded-full bg-blue-100 flex items-center justify-center">
-                  <Wrench size={18} className="text-blue-900" />
+          {recentMaintenance.map((item) => {
+            const vehicle = getVehicle(item.vehicleId);
+            
+
+            return (
+              <div
+                key={item._id}
+                className="flex items-center justify-between bg-white border border-slate-200 rounded-lg p-3"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="w-15 h-15 rounded-full overflow-hidden bg-blue-100 flex items-center justify-center shrink-0">
+                    {vehicle?.image ? (
+                      <img
+                        src={`${import.meta.env.VITE_API_URL.replace("/api", "")}/upload/Vehicle/${vehicle.image}`}
+                        alt={`${vehicle.brand} ${vehicle.model}`}
+                        className="w-full h-full object-cover block"
+                      />
+                    ) : (
+                      <Wrench size={18} className="text-blue-900" />
+                    )}
+                  </div>
+
+                  <div>
+                    <h4 className="font-semibold text-sm text-slate-700">
+                      {item.title}
+                    </h4>
+
+                    <p className="text-xs font-medium text-slate-600">
+                      {vehicle
+                        ? `${vehicle.brand} ${vehicle.model}`
+                        : "Unknown Vehicle"}
+                    </p>
+
+                    <span className="text-xs text-slate-400">{item.type}</span>
+                  </div>
                 </div>
-                <div>
-                  <h4 className="font-semibold text-sm text-slate-700">
-                    {item.title}
-                  </h4>
-                  <span className="text-xs text-slate-500">{item.type}</span>
-                </div>
+
+                <span className="text-xs text-slate-500">
+                  {new Date(item.date).toLocaleDateString()}
+                </span>
               </div>
-              <span className="text-xs text-slate-500">{new Date(item.date).toLocaleDateString()}</span>
-            </div>
-          ))}
+            );
+          })}
         </div>
       ) : (
         <div className="py-8 text-center">
-            <Wrench size={30} className="mx-auto text-slate-300 mb-2"/>
-            <p className="text-sm text-slate-500">No maintenance history yet</p>
+          <Wrench size={30} className="mx-auto text-slate-300 mb-2" />
+
+          <p className="text-sm text-slate-500">No maintenance history yet</p>
         </div>
       )}
     </div>
