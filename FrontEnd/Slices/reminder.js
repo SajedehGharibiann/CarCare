@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  reminder: [],
+  reminders: [],
 };
 
 export const reminderSlice = createSlice({
@@ -9,17 +9,17 @@ export const reminderSlice = createSlice({
   initialState,
 
   reducers: {
-    setReminder: (state, action) => {
-      state.reminder = action.payload;
+    setReminders: (state, action) => {
+      state.reminders = action.payload;
     },
     addReminder: (state, action) => {
-      state.reminder.push(action.payload);
+      state.reminders.push(action.payload);
     },
     removeReminder: (state, action) => {
-     state.reminder =  state.reminder.filter((reminder) => reminder._id !== action.payload);
+     state.reminders =  state.reminder.filter((reminder) => reminder._id !== action.payload);
     },
   },
 });
 
-export const {setReminder,addReminder,removeReminder}=reminderSlice.actions;
+export const {setReminders,addReminder,removeReminder}=reminderSlice.actions;
 export default reminderSlice.reducer;
